@@ -22,8 +22,8 @@ LinkNest is a beautifully crafted personal smart link hub — just like Linktree
 
 ## 📸 Preview
 
-![Light Mode](screenshots/light-mode.jpg)
-![Dark Mode](screenshots/dark-mode.jpg)
+![Light Mode](screenshots/light-mode.jpeg)
+![Dark Mode](screenshots/dark-mode.jpeg)
 
 ---
 
