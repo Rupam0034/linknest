@@ -12,7 +12,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-EQ8Z7SMZ92');
+    gtag('config', 'G-N7X6HW7XFD');
   </script>
 
   <title>LinkNest</title>
@@ -28,320 +28,327 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
 <style>
-    /* Base Styles */
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
-      scroll-behavior: smooth;
-      -webkit-tap-highlight-color: transparent;
-    }
-  :root {
-    --close-btn-filter: invert(1);
-    --transition-duration: 0.5s;
-    --transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
-    --swiper-navigation-size: 24px;
-  }
+  /* Base Styles & Variables */
+:root {
+  --close-btn-filter: invert(1);
+  --transition-duration: 0.5s;
+  --transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  --swiper-navigation-size: 24px;
+  --primary-color: #ffc107;
+  --secondary-color: #ff6f00;
+  --light-primary: #4e73df;
+  --light-secondary: #224abe;
+  --dark-bg: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  --light-bg: linear-gradient(to right, #f8f9fa, #e9ecef, #dee2e6);
+  --text-dark: white;
+  --text-light: #212529;
+}
 
-  body.light-mode {
-    --close-btn-filter: invert(0);
-  }
+/* Keyframes - Consolidated */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
 
-  .transition-all {
-    transition: all var(--transition-duration) var(--transition-timing);
-  }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
 
-  .btn-close {
-    opacity: 0.8;
-    transition: all 0.3s var(--transition-timing);
-  }
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(255, 193, 7, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(255, 193, 7, 0.5); }
+}
 
-  body.light-mode .btn-close {
-    filter: brightness(0);
-  }
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
 
-  .btn-close:hover {
-    opacity: 1;
-    transform: rotate(90deg) scale(1.1);
-  }
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+  40% { transform: translateY(-20px) translateX(-50%); }
+  60% { transform: translateY(-10px) translateX(-50%); }
+}
 
-  .profile-container {
-    position: relative;
-    text-align: center;
-    margin-top: 60px;
-    z-index: 2;
-  }
+@keyframes floatParticle {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+}
 
-  .profile-frame {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    background: transparent;
-    border: 8px solid transparent;
-    border-top-color: #ffc107;
-    border-left-color: #ff6f00;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: -1;
-    animation: rotate 8s linear infinite;
-  }
+@keyframes floatParticle2 {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(var(--move-x)); opacity: 0; }
+}
 
-  .overlay {
-    background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
-    height: 100vh;
-    padding-top: 80px;
-    backdrop-filter: blur(10px);
-    animation: weave 6s ease-in-out infinite alternate;
-    background-size: 200% 100%;
-    position: relative;
-    overflow: hidden;
-  }
+@keyframes floatParticle3 {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  20% { opacity: 1; transform: scale(1.2); }
+  80% { opacity: 1; transform: scale(0.8); }
+  100% { transform: translateY(-80vh) translateX(calc(var(--move-x) * 1.5)); opacity: 0; }
+}
 
-  .content-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    position: relative;
-    height: calc(100vh - 80px);
-    overflow-y: auto;
-  }
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
 
-  .particle {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: floatParticle linear infinite;
-    z-index: 1;
-  }
+@keyframes rotate {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
 
-  .particle:nth-child(3n) {
-    background: rgba(255, 193, 7, 0.7);
-    animation-duration: 15s;
-    animation-delay: 2s;
-  }
+@keyframes weave {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 50% 50%; }
+  100% { background-position: 100% 50%; }
+}
 
-  .particle:nth-child(3n+1) {
-    background: rgba(255, 111, 0, 0.6);
-    animation-duration: 12s;
-    animation-delay: 1s;
-  }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 
-  .particle:nth-child(5n) {
-    background: rgba(108, 117, 125, 0.4);
-    animation-duration: 18s;
-    animation-delay: 3s;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-  .particle:nth-child(7n) {
-    background: rgba(13, 110, 253, 0.5);
-    animation-duration: 14s;
-    animation-delay: 0.5s;
-  }
+@keyframes zoomIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-  @keyframes weave {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 50% 50%; }
-    100% { background-position: 100% 50%; }
-  }
+@keyframes lightPulse {
+  0% { box-shadow: 0 0 5px rgba(78, 115, 223, 0.2); }
+  50% { box-shadow: 0 0 15px rgba(78, 115, 223, 0.4); }
+  100% { box-shadow: 0 0 5px rgba(78, 115, 223, 0.2); }
+}
 
-  @keyframes float {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-15px) rotate(2deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-  }
+@keyframes lightDiamondPulse {
+  0% { transform: translate(25%, -25%) scale(1); }
+  50% { transform: translate(25%, -25%) scale(1.1); }
+  100% { transform: translate(25%, -25%) scale(1); }
+}
 
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-  }
+/* Base Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--dark-bg);
+  color: var(--text-dark);
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
 
-  @keyframes glow {
-    0% { box-shadow: 0 0 5px rgba(255, 193, 7, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.8); }
-    100% { box-shadow: 0 0 5px rgba(255, 193, 7, 0.5); }
-  }
+body.light-mode {
+  background: var(--light-bg);
+  color: var(--text-light);
+}
 
-  @keyframes shimmer {
-    0% { background-position: -1000px 0; }
-    100% { background-position: 1000px 0; }
-  }
+.transition-all {
+  transition: all var(--transition-duration) var(--transition-timing);
+}
 
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-    40% { transform: translateY(-20px) translateX(-50%); }
-    60% { transform: translateY(-10px) translateX(-50%); }
-  }
+/* Components */
+.btn-close {
+  opacity: 0.8;
+  transition: all 0.3s var(--transition-timing);
+  filter: var(--close-btn-filter);
+}
 
-  @keyframes floatParticle {
-    0% { transform: translateY(0) translateX(0); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
-  }
+.btn-close:hover {
+  opacity: 1;
+  transform: rotate(90deg) scale(1.1);
+}
 
-  @keyframes floatParticle2 {
-    0% { transform: translateY(0) translateX(0); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(-100vh) translateX(var(--move-x)); opacity: 0; }
-  }
+.profile-container {
+  position: relative;
+  text-align: center;
+  margin-top: 60px;
+  z-index: 2;
+}
 
-  @keyframes floatParticle3 {
-    0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-    20% { opacity: 1; transform: scale(1.2); }
-    80% { opacity: 1; transform: scale(0.8); }
-    100% { transform: translateY(-80vh) translateX(calc(var(--move-x) * 1.5)); opacity: 0; }
-  }
+.profile-frame {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: transparent;
+  border: 8px solid transparent;
+  border-top-color: var(--primary-color);
+  border-left-color: var(--secondary-color);
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+  animation: rotate 8s linear infinite;
+}
 
-  @keyframes ripple {
-    to {
-      transform: scale(4);
-      opacity: 0;
-    }
-  }
+body.light-mode .profile-frame {
+  border-top-color: var(--light-primary);
+  border-left-color: var(--light-secondary);
+  animation: rotate 8s linear infinite, lightPulse 3s ease-in-out infinite;
+}
 
-  @keyframes rotate {
-    0% { transform: translateX(-50%) rotate(0deg); }
-    100% { transform: translateX(-50%) rotate(360deg); }
-  }
+.overlay {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+  height: 100vh;
+  padding-top: 80px;
+  backdrop-filter: blur(10px);
+  animation: weave 6s ease-in-out infinite alternate;
+  background-size: 200% 100%;
+  position: relative;
+  overflow: hidden;
+}
 
-  /* Video play button styles */
-  .video-play-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 3;
-    opacity: 0;
-    transition: opacity 0.3s ease, transform 0.2s ease;
-  }
+body.light-mode .overlay {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+}
 
-  .video-play-btn i {
-    color: white;
-    font-size: 24px;
-    margin-left: 4px;
-  }
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+}
 
-  .video-play-btn.playing i {
-    margin-left: 0;
-  }
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatParticle linear infinite;
+  z-index: 1;
+}
 
-  .post-card:hover .video-play-btn,
-  .video-play-btn.playing {
-    opacity: 1;
-  }
+.particle:nth-child(3n) {
+  background: rgba(255, 193, 7, 0.7);
+  animation-duration: 15s;
+  animation-delay: 2s;
+}
 
-  .post-card.video-playing:not(:hover) .video-play-btn {
-    opacity: 0;
-  }
+.particle:nth-child(3n+1) {
+  background: rgba(255, 111, 0, 0.6);
+  animation-duration: 12s;
+  animation-delay: 1s;
+}
 
-  .post-card:not(.video-playing) .video-play-btn {
-    opacity: 1;
-  }
+.particle:nth-child(5n) {
+  background: rgba(108, 117, 125, 0.4);
+  animation-duration: 18s;
+  animation-delay: 3s;
+}
 
-  @keyframes pulse-center {
-    0% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.1); }
-    100% { transform: translate(-50%, -50%) scale(1); }
-  }
+.particle:nth-child(7n) {
+  background: rgba(13, 110, 253, 0.5);
+  animation-duration: 14s;
+  animation-delay: 0.5s;
+}
 
-  .post-card:not(.video-played) .video-play-btn {
-    animation: pulse-center 2s infinite;
-  }
+body.light-mode .particle {
+  background: rgba(78, 115, 223, 0.3);
+}
 
-  .post-card.video-played .video-play-btn {
-    animation: none;
-  }
+/* Profile Picture */
+.profile-pic {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 5px solid var(--primary-color);
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  transition: all 0.6s var(--transition-bounce);
+  animation: float 4s ease-in-out infinite, pulse 3s ease-in-out infinite;
+}
 
-  /* Profile Picture Animation */
-  .profile-pic {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    border: 5px solid #ffc107;
-    object-fit: cover;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    transition: all 0.6s var(--transition-bounce);
-    animation: float 4s ease-in-out infinite, pulse 3s ease-in-out infinite;
-  }
+body.light-mode .profile-pic {
+  border-color: var(--light-primary);
+}
 
-  body.light-mode .profile-pic {
-    border-color: #007bff;
-  }
+.profile-pic:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 12px 30px rgba(255, 193, 7, 0.6);
+}
 
-  .profile-pic:hover {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 12px 30px rgba(255, 193, 7, 0.6);
-  }
+.diamond-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  z-index: 3;
+  border: 2px solid white;
+  animation: pulse 2s infinite, float 3s ease-in-out infinite;
+  transform: translate(25%, -25%);
+  transition: all 0.4s var(--transition-timing);
+}
 
-  .diamond-badge {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: linear-gradient(135deg, #ffc107, #ff6f00);
-    color: white;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    z-index: 3;
-    border: 2px solid white;
-    animation: pulse 2s infinite, float 3s ease-in-out infinite;
-    transform: translate(25%, -25%);
-    transition: all 0.4s var(--transition-timing);
-  }
+body.light-mode .diamond-badge {
+  background: linear-gradient(135deg, var(--light-primary), var(--light-secondary));
+  animation: lightDiamondPulse 2s infinite;
+}
 
-  .diamond-badge:hover {
-    transform: translate(25%, -25%) scale(1.2) rotate(15deg);
-  }
+.diamond-badge:hover {
+  transform: translate(25%, -25%) scale(1.2) rotate(15deg);
+}
 
-  /* Social Icons Animation */
-  .social-icons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-  }
-  
-  .social-icons i {
-    font-size: 2rem; 
-    margin: 5px; 
-    color: #fff;
-    background-color: rgba(255,255,255,0.1);
-    padding: 12px; 
-    border-radius: 50%;
-    transition: all 0.6s var(--transition-bounce);
-    cursor: pointer;
-    animation: pulse 2s ease-in-out infinite;
-    animation-delay: calc(var(--i) * 0.1s);
-  }
+/* Social Icons */
+.social-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
 
-  .social-icons i:hover {
-    background-color: #ffc107;
-    color: #000;
-    transform: scale(1.3) rotate(10deg); 
-    animation: none;
-    box-shadow: 0 0 20px rgba(255, 193, 7, 0.6); 
-  }
+.social-icons i {
+  font-size: 2rem;
+  margin: 5px;
+  color: #fff;
+  background-color: rgba(255,255,255,0.1);
+  padding: 12px;
+  border-radius: 50%;
+  transition: all 0.6s var(--transition-bounce);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.social-icons i:hover {
+  background-color: var(--primary-color);
+  color: #000;
+  transform: scale(1.3) rotate(10deg);
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.6);
+}
+
+body.light-mode .social-icons i {
+  color: #495057;
+  background-color: rgba(73, 80, 87, 0.1);
+}
+
+body.light-mode .social-icons i:hover {
+  background-color: var(--light-primary);
+  color: white;
+  box-shadow: 0 0 15px rgba(78, 115, 223, 0.4);
+}
 
   /* Typed.js Text Styling */
   #typedText {
@@ -363,25 +370,32 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* Modal Animations */
-  .modal-content {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    animation: modalEntrance 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-    color: white;
-    transform-origin: center bottom;
-    transition: all 0.5s var(--transition-timing);
-    margin: 0 auto;
-  }
+/* Modal Styles */
+.modal-content {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  animation: modalEntrance 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  color: white;
+  transform-origin: center bottom;
+  transition: all 0.5s var(--transition-timing);
+  margin: 0 auto;
+}
 
-  .modal-content:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.8);
-  }
+body.light-mode .modal-content {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--text-light);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.modal-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+}
 
   /* Modal Title Styles */
   .modal-title {
@@ -403,720 +417,192 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
-
-  /* Back to Top Button Animation */
-  .back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: #ffc107;
-    color: black;
-    border-radius: 50%;
-    padding: 12px 16px;
-    font-size: 20px;
-    display: none;
-    z-index: 999;
-    opacity: 0;
-    transform: translateY(20px) scale(0.9);
-    transition: all 0.6s var(--transition-bounce);
-    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
-  }
-
-  .back-to-top:hover {
-    background: white;
-    color: black;
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
-  }
-
-  /* Post Card Animations */
-  .post-card {
-    transition: all 0.6s var(--transition-timing);
-    aspect-ratio: 1/1;
-    transform: translateY(0);
-  }
-
-  .post-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  }
-
-  .post-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.3);
-    opacity: 0;
-    transition: all 0.5s var(--transition-timing);
-  }
-
-  .post-card:hover .post-overlay {
-    opacity: 1;
-    backdrop-filter: blur(2px);
-  }
-
-  /* Hover Zoom Effect with Smooth Transition */
-  .hover-zoom {
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform;
-  }
-
-  .hover-zoom:hover {
-    transform: scale(1.08);
-  }
-
-  /* Profile Picture Modal Animation */
-  .profile-pic-modal {
-    cursor: pointer;
-    transition: all 0.6s var(--transition-bounce);
-    transform-origin: center;
-  }
-
-  .profile-pic-modal:hover {
-    transform: scale(1.15) rotate(5deg);
-    box-shadow: 0 0 25px rgba(255, 193, 7, 0.7);
-  }
-
-  /* Enlarged Profile Modal Animation */
-  #enlargedProfileModal .modal-content {
-    background: transparent;
-    border: none;
-    animation: fadeIn 0.4s ease-out forwards;
-  }
-
-  #enlargedProfileModal .modal-dialog {
-    max-width: 500px;
-    transition: all 0.4s ease;
-  }
-
-  #enlargedProfileModal img {
-    max-width: 100%;
-    height: auto;
-    max-height: 70vh;
-    margin: 0 auto;
-    display: block;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border-radius: 10px;
-    transition: all 0.5s var(--transition-timing);
-    transform: scale(0.95);
-    opacity: 0;
-    animation: zoomIn 0.5s 0.2s ease-out forwards;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes zoomIn {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  /* Light Mode Animations */
-  body.light-mode {
-    background: linear-gradient(to right, #f8f9fa, #e9ecef, #dee2e6);
-    color: #212529;
-    transition: background 1s ease, color 0.6s ease;
-  }
-
-  body.light-mode .overlay {
-    background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
-    backdrop-filter: blur(5px);
-    transition: background 1s ease;
-  }
-
-  body.light-mode .profile-pic {
-    border-color: #007bff;
-  }
-
-  body.light-mode .profile-frame {
-    border-top-color: #4e73df;
-    border-left-color: #2e59d9;
-    animation: rotate 8s linear infinite, lightPulse 3s ease-in-out infinite;
-  }
-
-  body.light-mode .gradient-text {
-    background: linear-gradient(to right, #4e73df, #224abe);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  body.light-mode .social-icons i {
-    color: #495057;
-    background-color: rgba(73, 80, 87, 0.1);
-    animation: lightPulse 2s ease-in-out infinite;
-    animation-delay: calc(var(--i) * 0.1s);
-  }
-
-  body.light-mode .social-icons i:hover {
-    background-color: #4e73df;
-    color: white;
-    box-shadow: 0 0 15px rgba(78, 115, 223, 0.4);
-  }
-
-  body.light-mode .modal-content {
-    background: rgba(255, 255, 255, 0.95);
-    color: #212529;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  }
-
-  body.light-mode .btn-custom,
-  body.light-mode .btn-premium {
-    background: linear-gradient(135deg, #4e73df, #224abe);
-    color: white;
-    box-shadow: 0 4px 15px rgba(78, 115, 223, 0.3);
-  }
-
-  body.light-mode .btn-custom:hover,
-  body.light-mode .btn-premium:hover {
-    background: linear-gradient(135deg, #224abe, #4e73df);
-    box-shadow: 0 8px 25px rgba(34, 74, 190, 0.4);
-  }
-
-  body.light-mode .card {
-    background-color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    border: none;
-  }
-
-  body.light-mode .badge {
-    color: white !important;
-  }
-
-  body.light-mode .badge.bg-success {
-    background-color: #1cc88a !important;
-  }
-
-  body.light-mode .badge.bg-info {
-    background-color: #36b9cc !important;
-  }
-
-  body.light-mode .badge.bg-warning {
-    background-color: #f6c23e !important;
-  }
-
-  body.light-mode .badge.bg-secondary {
-    background-color: #858796 !important;
-  }
-
-  body.light-mode .diamond-badge {
-    background: linear-gradient(135deg, #4e73df, #224abe);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-  }
-
-  body.light-mode .back-to-top {
-    background: #4e73df;
-    color: white;
-    box-shadow: 0 4px 15px rgba(78, 115, 223, 0.3);
-  }
-
-  body.light-mode .back-to-top:hover {
-    background: #224abe;
-    box-shadow: 0 8px 25px rgba(34, 74, 190, 0.4);
-  }
-
-  body.light-mode .btn-outline-primary {
-    color: #4e73df;
-    border-color: #4e73df;
-  }
-
-  body.light-mode .btn-outline-primary:hover {
-    background-color: #4e73df;
-    color: white;
-  }
-
-  body.light-mode .form-control {
-    background-color: rgba(255, 255, 255, 0.8);
-    border-color: #d1d3e2;
-  }
-
-  body.light-mode .form-control:focus {
-    border-color: #bac8f3;
-    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
-  }
-
-  body.light-mode .page-link {
-    color: #4e73df;
-  }
-
-  body.light-mode .page-item.active .page-link {
-    background-color: #4e73df;
-    border-color: #4e73df;
-  }
-
-  body.light-mode .nav-tabs .nav-link.active {
-    color: #4e73df;
-    border-bottom-color: #4e73df;
-  }
-
-  body.light-mode .nav-tabs .nav-link {
-    color: #6e707e;
-  }
-
-  /* Light mode specific animations */
-  @keyframes lightPulse {
-    0% { box-shadow: 0 0 5px rgba(78, 115, 223, 0.2); }
-    50% { box-shadow: 0 0 15px rgba(78, 115, 223, 0.4); }
-    100% { box-shadow: 0 0 5px rgba(78, 115, 223, 0.2); }
-  }
-
-  /* Enhanced particles for light mode */
-  body.light-mode .particle {
-    background: rgba(78, 115, 223, 0.3);
-  }
-
-  /* Better contrast for text in light mode */
-  body.light-mode .text-muted {
-    color: #6e707e !important;
-  }
-
-  /* Tab content adjustments */
-  body.light-mode .tab-content {
-    background-color: white;
-    border-radius: 0 0 10px 10px;
-    padding: 15px;
-  }
-
-  /* Post card adjustments */
-  body.light-mode .post-card {
-    background-color: white;
-  }
-
-  /* Form switch adjustments */
-  body.light-mode .form-check-input:checked {
-    background-color: #4e73df;
-    border-color: #4e73df;
-  }
-
-  /* Modal title glow for light mode */
-  body.light-mode .modal-title {
-    animation: lightTextGlow 3s infinite alternate;
-  }
-
-  @keyframes lightTextGlow {
-    from { text-shadow: 0 0 5px rgba(78, 115, 223, 0.3); }
-    to { text-shadow: 0 0 15px rgba(78, 115, 223, 0.5); }
-  }
-
-  /* Glass button adjustments */
-  body.light-mode .btn-glass {
-    background: rgba(255, 255, 255, 0.7);
-    color: #4e73df;
-    border: 1px solid rgba(78, 115, 223, 0.2);
-  }
-
-  body.light-mode .btn-glass:hover {
-    background: rgba(78, 115, 223, 0.1);
-    border-color: rgba(78, 115, 223, 0.3);
-  }
-
-  /* Scroll indicator color */
-  body.light-mode .scroll-indicator {
-    color: #4e73df;
-  }
-
-  /* Diamond badge pulse for light mode */
-  @keyframes lightDiamondPulse {
-    0% { transform: translate(25%, -25%) scale(1); }
-    50% { transform: translate(25%, -25%) scale(1.1); }
-    100% { transform: translate(25%, -25%) scale(1); }
-  }
-
-  body.light-mode .diamond-badge {
-    animation: lightDiamondPulse 2s infinite;
-  }
-
-  /* Mobile-specific styles */
-  @media (max-width: 767.98px) {
-    .profile-pic {
-      width: 120px;
-      height: 120px;
-    }
-    
-    .profile-frame {
-      width: 140px;
-      height: 140px;
-      top: -10px;
-    }
-    
-    .social-icons i {
-      font-size: 1.rem;
-      padding: 8px;
-    }
-    
-    .content-container {
-      padding: 15px;
-      height: calc(100vh - 60px);
-    }
-    
-    .modal-content {
-      padding: 20px;
-    }
-    
-    .modal-title {
-      font-size: 1.2rem;
-    }
-    
-    .navbar-brand {
-      font-size: 1rem;
-    }
-    
-    .form-check-label {
-      font-size: 0.9rem;
-    }
-    
-    #typedText {
-      font-size: 0.9rem;
-    }
-    
-    .profile-container h1 {
-      font-size: 1.5rem;
-    }
-    
-    /* Adjust modal layout for mobile */
-    .profile-modal .row {
-      flex-direction: column;
-    }
-    
-    .profile-modal .col-md-5 {
-      margin-bottom: 15px;
-    }
-    
-    /* Swiper navigation buttons */
-    .swiper-button-next,
-    .swiper-button-prev {
-      width: 30px;
-      height: 30px;
-    }
-    
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-      font-size: 18px;
-    }
-  }
-
-  /* Swiper custom styles */
-  .swiper {
-    width: 100%;
-    height: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-  }
-
-  .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 8px;
-  }
-
-  .swiper-button-next,
-  .swiper-button-prev {
-    color: #ffc107;
-    background: rgba(0, 0, 0, 0.5);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    backdrop-filter: blur(5px);
-  }
-
-  .swiper-button-next:after,
-    .swiper-button-prev:after {
-      font-size: 24px;
-    }
-
-    .swiper-pagination-bullet {
-      background: rgba(255, 255, 255, 0.5);
-      opacity: 1;
-    }
-
-    .swiper-pagination-bullet-active {
-      background: #ffc107;
-    }
-
-    /* Certificate slider */
-    .certificate-slider {
-      height: 300px;
-    }
-
-    .certificate-slide {
-      height: 280px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .certificate-slide img {
-      flex-grow: 1;
-      object-fit: contain;
-      max-height: 220px;
-    }
-
-    .certificate-slide .btn {
-      margin-top: 10px;
-    }
-
-    /* Post slider */
-    .post-slider {
-      height: 250px;
-    }
-
-    .post-slide {
-      height: 100%;
-    }
-
-    .post-slide img {
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Mobile touch feedback */
-    .btn:active,
-    .social-icons i:active {
-      transform: scale(0.95);
-    }
-
-    /* Prevent zoom on input focus on mobile */
-    input, select, textarea {
-      font-size: 16px;
-    }
-
-    /* Improved mobile menu */
-    .navbar-collapse {
-      padding: 10px;
-      background-color: rgba(33, 37, 41, 0.98);
-      border-radius: 0 0 10px 10px;
-    }
-
-    /*  mobile modal handling */
-    .modal-dialog {
-      margin: 10px auto;
-    }
-
-    /* Mobile profile modal  */
-    @media (max-width: 575.98px) {
-      .profile-modal .modal-content {
-        padding: 15px;
-      }
-      
-      .profile-modal .nav-tabs {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-      
-      .profile-modal .nav-link {
-        white-space: nowrap;
-      }
-    }
-
-    /* Mobile landscape */
-    @media (max-height: 500px) and (orientation: landscape) {
-      .profile-container {
-        margin-top: 20px;
-      }
-      
-      .content-container {
-        height: auto;
-        min-height: calc(100vh - 60px);
-      }
-    }
-
-    .btn-custom {
-      background: linear-gradient(135deg, #ffc107, #ff6f00);
-      color: black;
-      border: none;
-      padding: 8px 20px;
-      border-radius: 50px;
-      font-weight: 500;
-      box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
-      transition: all 0.4s ease;
-    }
-    
-    .btn-custom:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
-    }
-    
-    .btn-glass {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      transition: all 0.4s ease;
-    }
-    
-    .btn-glass:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-    
-    /*  modal content visibility */
-    .modal-content {
-      background: rgba(15, 32, 39, 0.95) !important;
-      backdrop-filter: blur(20px);
-    }
-    
-    body.light-mode .modal-content {
-      background: rgba(255, 255, 255, 0.95) !important;
-    }
-
-    .navbar-brand { font-family: 'Orbitron', sans-serif; }
-
-    /* Voice Command Styles */
-    .voice-command-btn {
-        background: transparent;
-        border: none;
-        color: white;
-        font-size: 1.2rem;
-        cursor: pointer;
-        margin-left: 15px;
-        transition: color 0.3s, background 0.3s;
-    }
-
-    body.light-mode .voice-command-btn {
-        color: #fff7f7;
-    }
-
-    .voice-command-btn.listening {
-        animation: pulse 1s infinite;
-        color: #ff0000;
-    }
-
-    body.light-mode .voice-command-btn.listening {
-        animation: pulse 1s infinite;
-        color: #ff0000; 
-    }
-
-    .voice-command-feedback {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 10px 20px;
-        border-radius: 20px;
-        z-index: 1000;
-        display: none;
-        font-size: 0.9rem;
-    }
-
-    body.light-mode .voice-command-feedback {
-        background: rgba(255, 255, 255, 0.9);
-        color: #000;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
-    }
-
-    .navbar-collapse {
-      background-color: rgba(33, 37, 41, 0.98) !important;
-      transition: none !important;
-      padding: 0 !important;
-      border-radius: 0 !important;
-      overflow: visible !important;
-    }
-
-    body.nav-opening *,
-    body.nav-closing * {
-      transition: none !important;
-      animation: none !important;
-    }
-
-    /* Sound toggle button styles */
-    .sound-toggle {
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      opacity: 0.8;
-    }
-
-    .sound-toggle:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-
-    .sound-toggle i {
-      font-size: 14px;
-    }
-
-    footer { background: transparent; z-index: 1; }
-    body.light-mode footer { color: #333 !important; }
-
-    /* analytics badges */
-    .social-icon-wrapper {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .platform-badge {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background: #ff6f00;
-      color: white;
-      border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      font-size: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
-      animation: pulse 1s infinite;
-    }
-    
-    body.light-mode .platform-badge {
-      background: #4e73df;
-    }
-    
-    .visitor-counter {
-      font-family: 'Orbitron', sans-serif;
-      color: #ffc107;
-      position: relative;
-    }
-    
-    body.light-mode .visitor-counter {
-      color: #4e73df;
-    }
-    
-    .visitor-counter::after {
-      content: 'visitors';
-      font-size: 0.6em;
-      display: block;
-      position: absolute;
-      bottom: -12px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      opacity: 0.7;
-    }
-
-    /*  QR Code Styles */
+/* Back to Top */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--primary-color);
+  color: black;
+  border-radius: 50%;
+  padding: 12px 16px;
+  font-size: 20px;
+  display: none;
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: all 0.6s var(--transition-bounce);
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+}
+
+.back-to-top:hover {
+  background: white;
+  color: black;
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+}
+
+body.light-mode .back-to-top {
+  background: var(--light-primary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(78, 115, 223, 0.3);
+}
+
+body.light-mode .back-to-top:hover {
+  background: var(--light-secondary);
+  box-shadow: 0 8px 25px rgba(34, 74, 190, 0.4);
+}
+
+/* Post Cards */
+.post-card {
+  transition: all 0.6s var(--transition-timing);
+  aspect-ratio: 1/1;
+  transform: translateY(0);
+}
+
+.post-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.post-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  opacity: 0;
+  transition: all 0.5s var(--transition-timing);
+}
+
+.post-card:hover .post-overlay {
+  opacity: 1;
+  backdrop-filter: blur(2px);
+}
+
+.hover-zoom {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.hover-zoom:hover {
+  transform: scale(1.08);
+}
+
+/* Video Play Button */
+.video-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.video-play-btn i {
+  color: white;
+  font-size: 24px;
+  margin-left: 4px;
+}
+
+.video-play-btn.playing i {
+  margin-left: 0;
+}
+
+.post-card:hover .video-play-btn,
+.video-play-btn.playing {
+  opacity: 1;
+}
+
+.post-card.video-playing:not(:hover) .video-play-btn {
+  opacity: 0;
+}
+
+.post-card:not(.video-playing) .video-play-btn {
+  opacity: 1;
+}
+
+.post-card:not(.video-played) .video-play-btn {
+  animation: pulse-center 2s infinite;
+}
+
+@keyframes pulse-center {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Enlarged Profile Modal */
+#enlargedProfileModal .modal-dialog {
+  max-width: 300px;
+}
+
+#enlargedProfileModal .modal-content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+}
+
+#enlargedProfileModal .modal-body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#enlargedProfileModal img {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--primary-color);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transform: scale(0.95);
+  opacity: 0;
+  animation: zoomIn 0.5s 0.2s ease-out forwards;
+}
+
+body.light-mode #enlargedProfileModal img {
+  border-color: var(--light-primary);
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: center;
+}
+
+.profile-actions .btn {
+  border-radius: 50px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
+.long-press-hint {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  display: none;
+}
+
+/* QR Code Styles */
 #qrCodeContainer {
   padding: 16px;
   background: white;
@@ -1150,10 +636,6 @@
   transform: translateY(-1px);
 }
 
-#qrDownloadBtn i {
-  margin-right: 6px;
-}
-
 .copy-link-btn {
   padding: 8px 16px;
   border-radius: 20px;
@@ -1169,10 +651,6 @@
 .copy-link-btn:hover {
   background-color: #e9ecef;
   transform: translateY(-1px);
-}
-
-.copy-link-btn i {
-  margin-right: 6px;
 }
 
 .copy-link-btn .tooltip-text {
@@ -1219,100 +697,7 @@
   border-color: #28a745 transparent transparent transparent;
 }
 
-    /* New styles for enlarged profile modal */
-    #enlargedProfileModal .modal-dialog {
-      max-width: 300px;
-    }
-
-    #enlargedProfileModal .modal-content {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0;
-    }
-
-    #enlargedProfileModal .modal-body {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    #enlargedProfileModal img {
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 5px solid #ffc107;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    body.light-mode #enlargedProfileModal img {
-      border-color: #4e73df;
-    }
-
-    .profile-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      width: 100%;
-      justify-content: center;
-    }
-
-    .profile-actions .btn {
-      border-radius: 50px;
-      padding: 8px 15px;
-      font-size: 0.9rem;
-    }
-
-    /* Long press indicator for mobile */
-    .long-press-hint {
-      position: absolute;
-      bottom: -30px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 0.8rem;
-      opacity: 0.7;
-      display: none;
-    }
-
-    @media (max-width: 767.98px) {
-      .long-press-hint {
-        display: block;
-      }
-      
-      #enlargedProfileModal .modal-dialog {
-        max-width: 250px;
-      }
-      
-      #enlargedProfileModal img {
-        width: 200px;
-        height: 200px;
-      }
-    }
-
-    /* Ripple effect for long press */
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.3);
-      transform: scale(0);
-      animation: ripple 0.6s linear;
-      pointer-events: none;
-    }
-
-    @keyframes ripple {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
-    }
-
-
-
-
-    
+/* Share Buttons */
 .share-buttons {
   display: flex;
   gap: 8px;
@@ -1355,10 +740,8 @@
 }
 
 .share-btn.x svg {
- 
   fill: white;
 }
-
 
 .share-btn.telegram {
   background-color: #0088CC;
@@ -1397,43 +780,1627 @@
 }
 
 
+/* NGL Modal Container */
+#nglModal .modal-dialog {
+  max-width: 600px;
+  width: 100%;
+  height: auto;
+  max-height: 90vh;
+  margin: 2rem auto;
+}
+
+#nglModal .modal-content {
+  background: rgba(18, 18, 18, 0.98);
+  border-radius: 24px;
+  border: none;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); 
+  transform: scale(0.98);
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 90vh;
+  will-change: transform, box-shadow;
+  backdrop-filter: blur(20px);
+  color: #f5f5f5; 
+}
+
+body.light-mode #nglModal .modal-content {
+  background: rgba(255, 255, 255, 0.98) !important; 
+  color: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+#nglModal .modal-content:hover {
+  transform: scale(1);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode #nglModal .modal-content:hover {
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+}
+
+/* Modal Header */
+#nglModal .modal-header {
+  border-bottom: none;
+  padding: 20px 20px 0;
+  position: relative;
+  z-index: 2;
+}
+
+#nglModal .btn-close {
+  filter: brightness(0) invert(1); 
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.25); 
+  border-radius: 50%;
+  padding: 8px;
+}
+
+body.light-mode #nglModal .btn-close {
+  filter: brightness(0); 
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+#nglModal .btn-close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+  background-color: rgba(255, 255, 255, 0.4); 
+}
+
+body.light-mode #nglModal .btn-close:hover {
+  background-color: rgba(0, 0, 0, 0.3); 
+}
+
+/* Modal Body */
+#nglModal .modal-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 0 20px 20px;
+  color: #f5f5f5; 
+}
+
+body.light-mode #nglModal .modal-body {
+  color: #1a1a1a;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Mode Switcher */
+.mode-switcher {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1); 
+  padding: 6px;
+  border-radius: 50px;
+  margin: 0 auto 25px;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+body.light-mode .mode-switcher {
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.mode-switcher-btn {
+  position: relative;
+  padding: 10px 24px;
+  border-radius: 50px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.95); 
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+body.light-mode .mode-switcher-btn {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.mode-switcher-btn i {
+  margin-right: 8px;
+}
+
+.mode-switcher-btn.active {
+  color: #ffffff;
+}
+
+body.light-mode .mode-switcher-btn.active {
+  color: #ffffff;
+}
+
+.mode-switcher-btn.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #36D1DC, #5B86E5); 
+  z-index: -1;
+  box-shadow: 0 4px 15px rgba(91, 134, 229, 0.5);
+}
+
+body.light-mode .mode-switcher-btn.active::before {
+  background: linear-gradient(135deg, #4e73df, #224abe);
+  box-shadow: 0 4px 15px rgba(78, 115, 223, 0.4);
+}
+
+.confession-mode .mode-switcher-btn.active::before {
+  background: linear-gradient(135deg, #FF416C, #FF4B2B);
+  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.5);
+}
+
+body.light-mode .confession-mode .mode-switcher-btn.active::before {
+  background: linear-gradient(135deg, #db2777, #ec4899);
+  box-shadow: 0 4px 15px rgba(219, 39, 119, 0.4);
+}
+
+/* Profile Ring */
+.profile-img-container {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 15px;
+  position: relative;
+}
+
+.profile-img-container::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #36D1DC, #5B86E5);
+  z-index: -1;
+  opacity: 0.9; 
+}
+
+body.light-mode .profile-img-container::before {
+  background: linear-gradient(135deg, #4e73df, #224abe);
+}
+
+.confession-mode .profile-img-container::before {
+  background: linear-gradient(135deg, #FF416C, #FF4B2B);
+}
+
+body.light-mode .confession-mode .profile-img-container::before {
+  background: linear-gradient(135deg, #db2777, #ec4899);
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s ease;
+}
+
+body.light-mode .profile-img {
+  border: 3px solid #e5e7eb; 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.profile-img:hover {
+  transform: scale(1.05) rotate(5deg);
+}
+
+/* Title & Subtitle */
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(to right, #36D1DC, #5B86E5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Fredoka One', cursive;
+}
+
+body.light-mode .title {
+  background: linear-gradient(to right, #4e73df, #224abe);
+}
+
+.confession-mode .title {
+  background: linear-gradient(to right, #FF416C, #FF4B2B);
+}
+
+body.light-mode .confession-mode .title {
+  background: linear-gradient(to right, #db2777, #ec4899);
+}
+
+.subtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.9); 
+  margin-bottom: 25px;
+  text-align: center;
+  font-family: 'Comic Neue', cursive;
+}
+
+body.light-mode .subtitle {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* CTA Button */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #36D1DC, #5B86E5);
+  box-shadow: 0 10px 25px rgba(91, 134, 229, 0.5);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+body.light-mode .cta-button {
+  background: linear-gradient(135deg, #4e73df, #224abe);
+  box-shadow: 0 10px 25px rgba(78, 115, 223, 0.4);
+}
+
+.confession-mode .cta-button {
+  background: linear-gradient(135deg, #FF416C, #FF4B2B);
+  box-shadow: 0 10px 25px rgba(255, 65, 108, 0.5);
+}
+
+body.light-mode .confession-mode .cta-button {
+  background: linear-gradient(135deg, #db2777, #ec4899);
+  box-shadow: 0 10px 25px rgba(219, 39, 119, 0.4);
+}
+
+.cta-button i {
+  margin-right: 10px;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(91, 134, 229, 0.6);
+}
+
+body.light-mode .cta-button:hover {
+  box-shadow: 0 15px 35px rgba(78, 115, 223, 0.5);
+}
+
+.confession-mode .cta-button:hover {
+  box-shadow: 0 15px 35px rgba(255, 65, 108, 0.6);
+}
+
+body.light-mode .confession-mode .cta-button:hover {
+  box-shadow: 0 15px 35px rgba(219, 39, 119, 0.5);
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.cta-button:hover::before {
+  transform: translateX(100%);
+}
+
+/* Feature Cards */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.feature-item {
+  background: rgba(255, 255, 255, 0.1); 
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body.light-mode .feature-item {
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode .feature-item:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #6ab6f0; 
+}
+
+body.light-mode .feature-icon {
+  color: #4e73df;
+}
+
+.confession-mode .feature-icon {
+  color: #ff6b4b; 
+}
+
+body.light-mode .confession-mode .feature-icon {
+  color: #db2777;
+}
+
+.feature-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+body.light-mode .feature-title {
+  color: #1a1a1a;
+}
+
+.feature-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9); 
+}
+
+body.light-mode .feature-desc {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* Footer Copy Link */
+.copy-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #ffffff;
+  background: rgba(91, 134, 229, 0.15); 
+  border: 1px solid rgba(91, 134, 229, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+body.light-mode .copy-link-btn {
+  background: rgba(78, 115, 223, 0.15);
+  border: 1px solid rgba(78, 115, 223, 0.25);
+  color: #4e73df;
+}
+
+.copy-link-btn i {
+  margin-right: 8px;
+}
+
+.copy-link-btn:hover {
+  background: rgba(91, 134, 229, 0.25);
+  transform: translateY(-2px);
+}
+
+body.light-mode .copy-link-btn:hover {
+  background: rgba(78, 115, 223, 0.25);
+}
+
+.copy-link-btn.copied {
+  background: rgba(40, 167, 69, 0.3); 
+}
+
+body.light-mode .copy-link-btn.copied {
+  background: rgba(40, 167, 69, 0.3);
+}
+
+/* Scrollbar Styling */
+#nglModal .modal-body::-webkit-scrollbar {
+  width: 8px; 
+}
+
+#nglModal .modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#nglModal .modal-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3); 
+  border-radius: 50px;
+}
+
+body.light-mode #nglModal .modal-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Mobile-specific styles */
+@media (max-width: 767.98px) {
+  #nglModal .modal-dialog {
+    margin: 10px auto;
+    max-width: 95%; /* Slightly wider for better mobile usage */
+  }
+
+  #nglModal .modal-content {
+    padding: 15px;
+  }
+
+  #nglModal .modal-body {
+    padding: 0 15px 15px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .cta-button {
+    padding: 12px 25px;
+    font-size: 14px;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  .feature-item {
+    padding: 15px;
+  }
+
+  .feature-icon {
+    font-size: 24px;
+  }
+
+  .feature-title {
+    font-size: 14px;
+  }
+
+  .feature-desc {
+    font-size: 12px;
+  }
+}
+
+/* Mobile landscape */
+@media (max-height: 500px) and (orientation: landscape) {
+  #nglModal .modal-body {
+    max-height: 70vh;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}
+
+
+.side-drawer {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100vh;
+  background: rgba(15, 32, 39, 0.98);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1050;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow-x: hidden; 
+  overflow-y: auto; 
+  padding: 0;
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+
+.side-drawer.open {
+  left: 0;
+}
+
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.drawer-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+body.light-mode .drawer-header {
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.drawer-header h5 {
+  margin: 0;
+  color: white;
+  font-weight: 500;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+body.light-mode .drawer-header h5 {
+  color: #333;
+}
+
+.drawer-header h5 i {
+  color: var(--primary-color);
+}
+
+.drawer-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode .drawer-close {
+  color: #333;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.drawer-close:hover {
+  transform: rotate(90deg);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+body.light-mode .drawer-close:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.drawer-content {
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.drawer-section {
+  margin-bottom: 25px;
+}
+
+.drawer-section-title {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.light-mode .drawer-section-title {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.drawer-item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  animation: slideIn 0.3s ease forwards;
+  opacity: 0;
+}
+
+.drawer-item:last-child {
+  border-bottom: none;
+}
+
+.drawer-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.light-mode .drawer-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.drawer-item-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%; /* Ensure it doesn't exceed container width */
+}
+
+.drawer-item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  color: var(--primary-color);
+}
+
+body.light-mode .drawer-item-icon {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--light-primary);
+}
+
+.drawer-item-text {
+  flex: 1;
+  min-width: 0; 
+  overflow: hidden; 
+}
+
+.drawer-item-title,
+.drawer-item-desc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.light-mode .drawer-item-title {
+  color: #333;
+}
+
+.drawer-item-desc {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+}
+
+body.light-mode .drawer-item-desc {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.drawer-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: pulse 2s infinite;
+}
+
+body.light-mode .drawer-toggle {
+  background: rgba(0, 0, 0, 0.1);
+  color: #333;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.drawer-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+  animation: none;
+}
+
+body.light-mode .drawer-toggle:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.drawer-footer {
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+body.light-mode .drawer-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Enhanced Light Mode for Side Drawer */
+body.light-mode .side-drawer {
+  background: rgba(255, 255, 255, 0.98);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .drawer-header {
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .drawer-header h5 {
+  color: #333;
+}
+
+body.light-mode .drawer-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .drawer-item:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+body.light-mode .drawer-item-title {
+  color: #333;
+}
+
+body.light-mode .drawer-item-desc {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+body.light-mode .drawer-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.6);
+}
+
+
+/* Voice Command Button */
+.voice-command-btn {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9b9da7, #ffffff);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.voice-command-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(74, 108, 247, 0.4);
+}
+
+.voice-command-btn:active {
+  transform: scale(0.98);
+}
+
+.voice-command-btn.active {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+.voice-command-btn.active .pulse-ring {
+  animation: pulse 1.5s infinite;
+}
+
+.voice-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  opacity: 0;
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+.status-indicator {
+  position: absolute;
+  bottom: -8px;
+  font-size: 10px;
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+
+.tooltip {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+
+.voice-command-btn:hover .tooltip {
+  opacity: 1;
+}
+
+/* Swiper Styles */
+.swiper {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--primary-color);
+  background: rgba(0, 0, 0, 0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  backdrop-filter: blur(5px);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 24px;
+}
+
+.swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--primary-color);
+}
+
+/* Certificate Slider */
+.certificate-slider {
+  height: 300px;
+}
+
+.certificate-slide {
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.certificate-slide img {
+  flex-grow: 1;
+  object-fit: contain;
+  max-height: 220px;
+}
+
+.certificate-slide .btn {
+  margin-top: 10px;
+}
+
+/* Post Slider */
+.post-slider {
+  height: 250px;
+}
+
+.post-slide {
+  height: 100%;
+}
+
+.post-slide img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Footer */
+footer {
+  background: transparent;
+  z-index: 1;
+}
+
+body.light-mode footer {
+  color: #333 !important;
+}
+
+.visitor-counter {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--primary-color);
+  position: relative;
+}
+
+body.light-mode .visitor-counter {
+  color: var(--light-primary);
+}
+
+.visitor-counter::after {
+  content: 'visitors';
+  font-size: 0.6em;
+  display: block;
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  opacity: 0.7;
+}
+
+/* Buttons */
+.btn-custom {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: black;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+  transition: all 0.4s ease;
+}
+
+.btn-custom:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+}
+
+body.light-mode .btn-custom {
+  background: linear-gradient(135deg, var(--light-primary), var(--light-secondary));
+  color: white;
+}
+
+body.light-mode .btn-custom:hover {
+  box-shadow: 0 8px 25px rgba(78, 115, 223, 0.5);
+}
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  transition: all 0.4s ease;
+}
+
+body.light-mode .btn-glass {
+  background: rgba(0, 0, 0, 0.05);
+  color: #333;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+body.light-mode .btn-glass:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Form Elements */
+.form-check-label {
+  color: white;
+  margin-left: 10px;
+  font-size: 0.9rem;
+}
+
+body.light-mode .form-check-label {
+  color: #333;
+}
+
+.form-switch .form-check-input {
+  width: 2.5em;
+  height: 1.5em;
+  margin-left: 0;
+  cursor: pointer;
+}
+
+.form-switch .form-check-input:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+body.light-mode .form-switch .form-check-input:checked {
+  background-color: var(--light-primary);
+  border-color: var(--light-primary);
+}
+
+/* Responsive Styles */
+@media (max-width: 767.98px) {
+  .profile-pic {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .profile-frame {
+    width: 140px;
+    height: 140px;
+    top: -10px;
+  }
+  
+  .social-icons i {
+    font-size: 2rem;
+    padding: 8px;
+  }
+  
+  .content-container {
+    padding: 15px;
+    height: calc(100vh - 60px);
+  }
+  
+  .modal-content {
+    padding: 20px;
+  }
+  
+  .modal-title {
+    font-size: 1.2rem;
+  }
+  
+  #typedText {
+    font-size: 0.9rem;
+  }
+  
+  .profile-container h1 {
+    font-size: 1.5rem;
+  }
+  
+  .long-press-hint {
+    display: block;
+  }
+  
+  #enlargedProfileModal .modal-dialog {
+    max-width: 250px;
+  }
+  
+  #enlargedProfileModal img {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    font-size: 18px;
+  }
+  
+  .drawer-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .profile-container {
+    margin-top: 20px;
+  }
+  
+  .content-container {
+    height: auto;
+    min-height: calc(100vh - 60px);
+  }
+  
+  #nglModal .modal-body {
+    max-height: 70vh;
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}
+
+/* Animation Delays for Drawer Items */
+.drawer-item:nth-child(1) { animation-delay: 0.1s; }
+.drawer-item:nth-child(2) { animation-delay: 0.2s; }
+.drawer-item:nth-child(3) { animation-delay: 0.3s; }
+.drawer-item:nth-child(4) { animation-delay: 0.4s; }
+.drawer-item:nth-child(5) { animation-delay: 0.5s; }
+.drawer-item:nth-child(6) { animation-delay: 0.6s; }
+  
+
+  
+ 
+#enlargedProfileModal .modal-dialog {
+  max-width: 300px;
+  margin: 1.75rem auto;
+  display: flex;
+  align-items: center;
+  min-height: calc(100% - 3.5rem);
+}
+
+@media (max-width: 576px) {
+  #enlargedProfileModal .modal-dialog {
+    max-width: 90%;
+    margin: 0.5rem auto;
+    min-height: calc(100% - 1rem);
+  }
+  
+  #enlargedProfileModal img {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .profile-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .profile-actions .btn {
+    width: 100%;
+  }
+}
+
+
+/* Enhanced NGL Icon */
+.social-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.platform-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: linear-gradient(135deg, #36D1DC, #5B86E5);
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 2px solid var(--dark-bg);
+}
+
+body.light-mode .platform-badge {
+  border: 2px solid var(--light-bg);
+}
+
+.confession-mode .platform-badge {
+  background: linear-gradient(135deg, #FF416C, #FF4B2B);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  #enlargedProfileModal img {
+    width: 70vw;
+    height: 70vw;
+  }
+  
+  .profile-actions {
+    width: 80%;
+  }
+  
+  .profile-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Animation for NGL icon */
+.social-icons i.fa-comment-dots {
+  position: relative;
+}
+
+.social-icons i.fa-comment-dots::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 8px;
+  height: 8px;
+  background: #FF416C;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+  opacity: 0;
+}
+
+.social-icons i.fa-comment-dots:hover::after {
+  opacity: 1;
+}
+
+/*  light mode for NGL modal */
+body.light-mode #nglModal .modal-content {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode #nglModal .feature-item {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode #nglModal .feature-title {
+  color: #333;
+}
+
+body.light-mode #nglModal .feature-desc {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+body.light-mode #nglModal .btn-close {
+  filter: none;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* transitions for theme changes */
+.side-drawer, .drawer-header, .drawer-item, 
+#enlargedProfileModal .modal-content, 
+#nglModal .modal-content {
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+
+.voice-feedback {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  text-align: center;
+  max-width: 80%;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode .voice-feedback {
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.voice-command-btn.active {
+  background: linear-gradient(135deg, #FF416C, #FF4B2B);
+  box-shadow: 0 0 15px rgba(255, 65, 108, 0.6);
+}
+
+.voice-command-btn.active .pulse-ring {
+  animation: pulse 1.5s infinite;
+}
+
+
+
+body.light-mode .drawer-item-title {
+  color: #333 !important;
+}
+
+body.light-mode .drawer-item-desc {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+body.light-mode .drawer-item-icon {
+  color: var(--light-primary) !important;
+}
+
+body.light-mode .btn-outline-light {
+  color: #333 !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode .btn-outline-light:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+
+/* Profile Modal Tabs */
+#profileTabs {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode #profileTabs {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#profileTabs .nav-item {
+  margin: 0;
+}
+
+#profileTabs .nav-link {
+  border: none;
+  border-radius: 0;
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+body.light-mode #profileTabs .nav-link {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+#profileTabs .nav-link.active {
+  color: var(--primary-color);
+  background: transparent;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+body.light-mode #profileTabs .nav-link.active {
+  color: var(--light-primary);
+  border-bottom-color: var(--light-primary);
+}
+
+#profileTabs .nav-link:not(.active):hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.light-mode #profileTabs .nav-link:not(.active):hover {
+  color: #333;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+
+.tab-content {
+  width: 100%;
+}
+
+
+
+
+.side-drawer {
+  overflow-x: hidden; 
+}
+
+.drawer-content {
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  width: 100%; 
+  padding-right: 5px; 
+}
+
+
+.drawer-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.drawer-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+body.light-mode .drawer-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
 
 </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="#">✨ My Link Universe</a>
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navContent">
-      <span class="navbar-toggler-icon"></span>
+<!-- Side Drawer Toggle Button -->
+<button class="drawer-toggle" id="drawerToggle">
+  <i class="fas fa-sliders-h"></i>
+</button>
+
+<!-- Side Drawer -->
+<div class="side-drawer" id="sideDrawer">
+  <div class="drawer-header">
+    <h5><i class="fas fa-cog"></i> Control Panel</h5>
+    <button class="drawer-close" id="drawerClose">
+      <i class="fas fa-times"></i>
     </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navContent">
-      <ul class="navbar-nav align-items-center">
-        <li class="nav-item">
-          <div class="digital-clock" id="digitalClock"></div>
-        </li>
-        <li class="nav-item">
-          <button class="voice-command-btn" id="voiceCommandBtn" title="Voice Commands">
-            <i class="fas fa-microphone"></i>
-          </button>
-        </li>
-        <li class="nav-item ms-3">
-          <div class="form-check form-switch text-white">
-            <input class="form-check-input" type="checkbox" id="themeToggle">
-            <label class="form-check-label" for="themeToggle">Light Mode</label>
+  </div>
+  
+  <div class="drawer-content">
+    
+    
+    <!-- Tools Section -->
+    <div class="drawer-section">
+      <div class="drawer-section-title">
+        <i class="fas fa-tools"></i> Tools
+      </div>
+      
+<div class="drawer-item">
+  <div class="drawer-item-content">
+    <div class="drawer-item-icon">
+      <i class="fas fa-microphone" aria-hidden="true"></i>
+    </div>
+    <div class="drawer-item-text">
+      <div class="drawer-item-title">Voice Commands</div>
+      <div class="drawer-item-desc">Control with your voice</div>
+    </div>
+    <button class="voice-command-btn" id="voiceCommandBtn" aria-label="Activate voice commands">
+      
+      <div class="voice-icon-container">
+        <i class="fas fa-microphone"></i>
+        <div class="pulse-ring"></div>
+        <div class="status-indicator" aria-live="polite"></div>
+      </div>
+      <span class="tooltip">Click to start speaking</span>
+    </button>
+  </div>
+</div>
+      
+      <div class="drawer-item">
+        <div class="drawer-item-content">
+          <div class="drawer-item-icon">
+            <i class="fas fa-palette"></i>
           </div>
-        </li>
-      </ul>
+          <div class="drawer-item-text">
+            <div class="drawer-item-title">Theme</div>
+            <div class="drawer-item-desc">Light/Dark mode</div>
+          </div>
+          <div class="form-check form-switch ms-auto">
+            <input class="form-check-input" type="checkbox" id="themeToggle">
+            <label class="form-check-label" for="themeToggle"></label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="drawer-item">
+        <div class="drawer-item-content">
+          <div class="drawer-item-icon">
+            <i class="fas fa-qrcode"></i>
+          </div>
+          <div class="drawer-item-text">
+            <div class="drawer-item-title">QR Code</div>
+            <div class="drawer-item-desc">Share profile</div>
+          </div>
+          <button class="btn btn-sm btn-outline-light" id="drawerQrCodeBtn">
+            <i class="fas fa-external-link-alt"></i>
+            
+          </button>
+        </div>
+      </div>
+    </div>
+    
+   <div class="drawer-section">
+  <div class="drawer-section-title">
+    <i class="fas fa-bolt"></i> Quick Actions
+  </div>
+      
+    <!-- Profile Quick Action -->
+  <div class="drawer-item">
+    <div class="drawer-item-content">
+      <div class="drawer-item-icon">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="drawer-item-text">
+        <div class="drawer-item-title">View Profile</div>
+        <div class="drawer-item-desc">See complete profile</div>
+      </div>
+      <button class="btn btn-sm btn-outline-light" onclick="openProfileTab('profile')">
+        <i class="fas fa-external-link-alt"></i>
+      </button>
     </div>
   </div>
-</nav>
+      
+        <!-- Certificates Quick Action -->
+  <div class="drawer-item">
+    <div class="drawer-item-content">
+      <div class="drawer-item-icon">
+        <i class="fas fa-certificate"></i>
+      </div>
+      <div class="drawer-item-text">
+        <div class="drawer-item-title">Certificates</div>
+        <div class="drawer-item-desc">View achievements</div>
+      </div>
+      <button class="btn btn-sm btn-outline-light" onclick="openProfileTab('certificates')">
+        <i class="fas fa-external-link-alt"></i>
+      </button>
+    </div>
+  </div>
 
-<!-- Voice Command Feedback -->
-<div class="voice-command-feedback" id="voiceFeedback">
-  Listening for commands...
+
+
+
+      
+      <div class="drawer-item">
+        <div class="drawer-item-content">
+          <div class="drawer-item-icon">
+            <i class="fas fa-image"></i>
+          </div>
+          <div class="drawer-item-text">
+            <div class="drawer-item-title">Gallery</div>
+            <div class="drawer-item-desc">View photos & videos</div>
+          </div>
+  <button class="btn btn-sm btn-outline-light" onclick="openProfileTab('Posts')">            <i class="fas fa-external-link-alt"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+ 
+
+
+      <!-- Portfolio Quick Action  -->
+  <div class="drawer-item">
+    <div class="drawer-item-content">
+      <div class="drawer-item-icon">
+        <i class="fas fa-globe"></i>
+      </div>
+      <div class="drawer-item-text">
+        <div class="drawer-item-title">Portfolio</div>
+        <div class="drawer-item-desc">View my complete portfolio</div>
+      </div>
+      <button class="btn btn-sm btn-outline-light" onclick="openPortfolio()">
+        <i class="fas fa-external-link-alt"></i>
+      </button>
+    </div>
+  </div>
+   </div>
+  
+  <div class="drawer-footer">
+    LinkNest v3.0
+  </div>
 </div>
+
+<!-- Drawer Overlay -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
 
 <!-- Hero Section -->
 <div class="overlay">
@@ -1461,24 +2428,40 @@
         <p class="lead" id="typedText" data-aos="fade-up" data-aos-delay="100"></p>
 
         <div class="social-icons mt-4" data-aos="zoom-in" data-aos-delay="200">
+
+        <a href="https://www.facebook.com/rupam.baral.71" target="_blank" title="Facebook">
+            <i class="fab fa-facebook"></i>
+          </a>
+
           <a href="https://www.instagram.com/_rupambaral?utm_source=qr&igsh=MXVpaThodHFobDNzMw==" target="_blank" title="Instagram">
             <i class="fab fa-instagram"></i>
           </a>
+            </a>
+         
    
           <a href="https://www.snapchat.com/add/rupam_baral003?share_id=w4OeDPv6_Kg&locale=en-US" target="_blank" title="Snapchat">
             <i class="fab fa-snapchat"></i>
-          </a>
-                 <a href="https://www.facebook.com/rupam.baral.71" target="_blank" title="Facebook">
-            <i class="fab fa-facebook"></i>
-          </a>
-          <i class="fab fa-linkedin" data-bs-toggle="modal" data-bs-target="#linkedinModal"></i>
-          <i class="fab fa-github" data-bs-toggle="modal" data-bs-target="#githubModal"></i>
-          <i class="fas fa-code" data-bs-toggle="modal" data-bs-target="#replitModal" title="Replit"></i>
+ <a href="#" data-bs-toggle="modal" data-bs-target="#whatsappModal" title="Request WhatsApp Access">
+  <i class="fab fa-whatsapp"></i>
+</a>       
+<a href="https://www.linkedin.com/in/rupam-baral-4415a2283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
+   target="_blank" 
+   title="Visit my LinkedIn">
+  <i class="fab fa-linkedin"></i>
+</a>
+<i class="fab fa-github" data-bs-toggle="modal" data-bs-target="#githubModal"></i>
+ <i class="fas fa-code" data-bs-toggle="modal" data-bs-target="#replitModal" title="Replit"></i>
+          
+         
          
           <a href="https://www.youtube.com/@RupamBaralvlogs" target="_blank" title="YouTube">
             <i class="fab fa-youtube"></i>
           </a>
            <i class="fab fa-spotify" data-bs-toggle="modal" data-bs-target="#spotifyModal"></i>
+ <a href="#" data-bs-toggle="modal" data-bs-target="#nglModal" title="Anonymous Messages" class="social-icon-wrapper">
+  <i class="fas fa-comment-dots"></i>
+  <span class="platform-badge">NGL</span>
+</a>
        <i class="fas fa-qrcode" id="qrCodeBtn" title="Generate QR Code for this page"></i>
         </div>
       </div>
@@ -1487,11 +2470,11 @@
   </div>
 </div>
 
-<!-- Compact Profile Modal (Fixed Positioning) -->
+<!-- Compact Profile Modal  -->
 <div class="modal fade profile-modal" id="profileModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-3 mx-auto">
-      <!-- Fixed Close Button with improved visibility -->
+      
       <button type="button" 
               class="btn-close position-absolute bg-white p-2 rounded-circle shadow-sm" 
               style="top: 10px; right: 10px; z-index: 10;"
@@ -1518,14 +2501,14 @@
           <small class="text- d-block mb-2">BCA Student</small>
         </div>
 
-        <!-- Right Column - Compact Side-by-Side Layout -->
+        <!-- Right Column  -->
         <div class="col-md-7">
-          <!-- Compact About Me Header -->
+          <!--  About Me Header -->
           <div class="d-flex justify-content-between align-items-center mb-2">
             <h5 class="modal-title mb-0">About Me</h5>
           </div>
 
-          <!-- Skills & Info in Compact Grid -->
+          <!-- Skills & Info  -->
           <div class="row g-2 mb-2">
             <!-- Roles -->
             <div class="col-12">
@@ -1548,7 +2531,7 @@
             </div>
           </div>
 
-          <!-- Compact Contact Info -->
+          <!--  Contact Info -->
           <div class="row g-1 small">
             <div class="col-12">
               <div class="d-flex align-items-center gap-2 text-truncate">
@@ -1570,24 +2553,24 @@
             </div>
           </div>
 
-          <!-- Tabs Navigation -->
-          <ul class="nav nav-tabs" id="profileTabs">
-            <li class="nav-item">
-              <button class="nav-link active py-1" data-bs-toggle="tab" data-bs-target="#profile-content">
-                <i class="fas fa-user me-1"></i> Profile
-              </button>
-            </li>
-            <li class="nav-item">
-              <button class="nav-link py-1" data-bs-toggle="tab" data-bs-target="#posts-content">
-                <i class="fas fa-image me-1"></i> Posts
-              </button>
-            </li>
-            <li class="nav-item">
-              <button class="nav-link py-1" data-bs-toggle="tab" data-bs-target="#certificates-content">
-                <i class="fas fa-certificate me-1"></i> Certificates
-              </button>
-            </li>
-          </ul>
+<!-- Tabs Navigation  -->
+<ul class="nav nav-tabs d-flex justify-content-between" id="profileTabs">
+  <li class="nav-item flex-grow-1 text-center">
+    <button class="nav-link active py-1 w-100" data-bs-toggle="tab" data-bs-target="#profile-content">
+      <i class="fas fa-user me-1"></i> Profile
+    </button>
+  </li>
+  <li class="nav-item flex-grow-1 text-center">
+    <button class="nav-link py-1 w-100" data-bs-toggle="tab" data-bs-target="#posts-content">
+      <i class="fas fa-image me-1"></i> Posts
+    </button>
+  </li>
+  <li class="nav-item flex-grow-1 text-center">
+    <button class="nav-link py-1 w-100" data-bs-toggle="tab" data-bs-target="#certificates-content">
+      <i class="fas fa-certificate me-1"></i> Certificates
+    </button>
+  </li>
+</ul>
           
           <!-- Tabs Content -->
           <div class="tab-content mt-2">
@@ -1714,10 +2697,10 @@
                     </div>
                   </div>
                 </div>
-                <!-- Add navigation buttons -->
+                <!-- navigation buttons -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
-                <!-- Add pagination -->
+                <!--  pagination -->
                 <div class="swiper-pagination"></div>
               </div>
             </div>
@@ -1776,10 +2759,10 @@
                     </a>
                   </div>
                 </div>
-                <!-- Add navigation buttons -->
+                <!-- navigation buttons -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
-                <!-- Add pagination -->
+                <!-- pagination -->
                 <div class="swiper-pagination"></div>
               </div>
             </div>
@@ -1800,7 +2783,7 @@
 </div>
 
 <div class="modal fade" id="enlargedProfileModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered d-flex align-items-center justify-content-center">
     <div class="modal-content bg-transparent border-0">
       <div class="modal-header border-0" style="position: absolute; top: 0; right: 0; z-index: 1;">
         <button type="button" class="btn-close bg-white p-2 rounded-circle" 
@@ -1825,20 +2808,7 @@
   </div>
 </div>
 
-<!-- LinkedIn Modal -->
-<div class="modal fade" id="linkedinModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center">
-      <h5 class="modal-title">LinkedIn</h5>
-      <p>Connect with me on LinkedIn and explore my professional journey.</p>
-      <ul class="text-start">
-        <li>Frontend Developer</li>
-        <li>2+ years experience in React & Bootstrap</li>
-      </ul>
-      <a href="https://www.linkedin.com/in/rupam-baral-4415a2283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="btn btn-custom mt-3" target="_blank">Visit Profile</a>
-    </div>
-  </div>
-</div>
+
 
 <!-- GitHub Modal -->
 <div class="modal fade" id="githubModal" tabindex="-1">
@@ -1864,18 +2834,18 @@
   </div>
 </div>
 
-<!-- Spotify Modal - Sleek Edge-to-Edge Version -->
+<!-- Spotify Modal -->
 <div class="modal fade" id="spotifyModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content border-0 overflow-hidden">
-      <!-- Close Button (floating, minimal) -->
+      <!-- Close Button  -->
       <button type="button" 
               class="btn-close position-absolute top-0 end-0 m-2 bg-white rounded-circle p-2 opacity-75" 
               data-bs-dismiss="modal" 
               aria-label="Close"
               style="z-index: 1; box-shadow: 0 0 5px rgba(0,0,0,0.2);"></button>
       
-      <!-- Content with no padding - edge-to-edge -->
+      <!-- Content with no padding -->
       <div class="ratio ratio-16x9">
         <iframe 
           style="border: none;" 
@@ -1888,7 +2858,7 @@
         </iframe>
       </div>
       
-      <!-- Minimal title overlay (optional) -->
+      <!-- Minimal title overlay -->
       <div class="position-absolute bottom-0 start-0 p-3 text-white" style="z-index: 1; background: linear-gradient(transparent, rgba(0,0,0,0.7)); width: 100%;">
         <h6 class="mb-0">My Playlist</h6>
         <small class="opacity-75">Vibe with my favorite tracks</small>
@@ -1896,11 +2866,124 @@
     </div>
   </div>
 </div>
+<!-- NGL/Confession Modal -->
+<div class="modal fade" id="nglModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content doodle-border" style="background: rgba(15, 32, 39, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);">
+      <!-- Doodle elements -->
+      <div class="doodle-element doodle-1"></div>
+      <div class="doodle-element doodle-2"></div>
+      
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body text-center">
+        <!-- Mode Switcher -->
+        <div class="mode-switcher mb-4">
+          <button class="mode-switcher-btn active" data-mode="ngl">
+            <i class="fas fa-comment-dots me-2"></i> NGL 
+          </button>
+          <button class="mode-switcher-btn" data-mode="confess">
+            <i class="fas fa-heart me-2"></i> Confessions
+          </button>
+        </div>
+        
+        <!-- NGL Content -->
+        <div id="nglContent">
+          <img src="images/dp Image 2025-07-11 at 5.27.49 PM.jpeg" alt="Profile" 
+               class="img-fluid rounded-circle mb-3" 
+               style="width: 100px; height: 100px; border: 3px solid #0717ff; box-shadow: 0 5px 15px rgba(7, 73, 255, 0.3);">
+          <h4 class="mb-3" style="font-family: 'Fredoka One', cursive;">Send Me Anonymous Messages 💬</h4>
+          <p class="mb-4" style="font-family: 'Comic Neue', cursive;">No names, no faces - just honest thoughts</p>
+          
+<a href="https://ngl.link/_rupam" target="_blank" 
+   class="btn bubbly-button mb-3" 
+   style="padding: 12px 30px; font-size: 1.1rem; background: linear-gradient(135deg, #3b82f6, #06b6d4);">
+  <i class="fas fa-paper-plane me-2"></i> Send NGL Message
+</a>
+
+
+
+          <div class="features-grid">
+            <div class="feature-item">
+              <i class="fas fa-lock feature-icon"></i>
+              <div class="feature-title">Totally Private</div>
+              <div class="feature-desc">No one will know it's you</div>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-user-secret feature-icon"></i>
+              <div class="feature-title">100% Anonymous</div>
+              <div class="feature-desc">No names or tracking</div>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-bolt feature-icon"></i>
+              <div class="feature-title">Instant Delivery</div>
+              <div class="feature-desc">Messages arrive immediately</div>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-smile feature-icon"></i>
+              <div class="feature-title">No Judgement</div>
+              <div class="feature-desc">Say what's on your mind</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Confession Content -->
+        <div id="confessContent" style="display: none;">
+          <img src="images/dp Image 2025-07-11 at 5.27.49 PM.jpeg" alt="Profile" 
+               class="img-fluid rounded-circle mb-3" 
+               style="width: 100px; height: 100px; border: 3px solid #db2777; box-shadow: 0 5px 15px rgba(219, 39, 119, 0.3);">
+          <h4 class="mb-3" style="font-family: 'Fredoka One', cursive;">Send Me Secret Confessions 💌</h4>
+          <p class="mb-4" style="font-family: 'Comic Neue', cursive;">Share your deepest secrets anonymously</p>
+          
+          <a href="https://confess.ngl.link/_rupam" target="_blank" 
+             class="btn bubbly-button mb-3" 
+             style="padding: 12px 30px; font-size: 1.1rem; background: linear-gradient(135deg, #db2777, #ec4899);">
+            <i class="fas fa-heart me-2"></i> Send Confession
+          </a>
+          
+          <div class="features-grid">
+            <div class="feature-item">
+              <i class="fas fa-lock feature-icon" style="color: #db2777;"></i>
+              <div class="feature-title">Totally Private</div>
+              <div class="feature-desc">No one will know it's you</div>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-fire feature-icon" style="color: #db2777;"></i>
+              <div class="feature-title">Hot Confessions</div>
+              <div class="feature-desc">Share your deepest thoughts</div>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-shield-alt feature-icon" style="color: #db2777;"></i>
+              <div class="feature-title">Secure</div>
+              <div class="feature-desc">Your secrets are safe</div>
+            </div>
+            <div class="feature-item">
+              <i class="fas fa-heartbeat feature-icon" style="color: #db2777;"></i>
+              <div class="feature-title">Emotional</div>
+              <div class="feature-desc">Express your true feelings</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-glass" id="nglCopyLinkBtn">
+          <i class="fas fa-copy me-2"></i> Copy Link
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- QR Code Modal -->
 <div class="modal fade" id="qrCodeModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content text-center p-3">
-      <h5 class="modal-title mb-2">Scan QR Code</h5>
+    
       <div id="qrCodeContainer" class="mb-3"></div>
       <a id="qrDownloadBtn" class="btn btn-sm btn-custom" download="my-linknest-qr.png">
         <i class="fas fa-download me-1"></i> Download QR
@@ -1957,14 +3040,55 @@
     </div>
   </div>
 </div>
+
+<!-- WhatsApp Modal -->
+<div class="modal fade" id="whatsappModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center shadow-lg rounded-4 bg-dark text-white">
+      
+      <div class="modal-header border-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <i class="fab fa-whatsapp text-success mb-3" style="font-size: 3rem;"></i>
+        <h5 class="mb-3 fw-semibold">Request My WhatsApp</h5>
+        
+        <a href="https://forms.gle/ZU1qEH1B5B886m7V7" target="_blank" class="btn btn-success w-100">
+          <i class="fas fa-link me-2"></i> Fill Request Form
+        </a>
+
+        <div class="mt-3 px-3 py-2 bg-secondary bg-opacity-25 rounded-3 d-flex align-items-center justify-content-center">
+          <i class="fas fa-user-check me-2 text-info"></i>
+          <span class="small text-light">Include your handle for quick DM verification.</span>
+        </div>
+      </div>
+
+      <div class="modal-footer border-0 justify-content-center">
+       <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
 <!-- Back to Top Button -->
 <button class="back-to-top" id="backToTop">
   <i class="fas fa-arrow-up"></i>
 </button>
 
+<div class="voice-feedback" id="voiceFeedback" style="display: none;"></div>
 
-
-<!-- Updated Footer with Visitor Counter -->
 <footer class="text-center py-2 position-fixed bottom-0 start-0 end-0">
   <div class="container">
     <div class="btn-glass d-inline-block px-3 py-0 rounded-pill">
@@ -1993,170 +3117,184 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Voice Command System
-  const voiceCommandBtn = document.getElementById('voiceCommandBtn');
-  const voiceFeedback = document.getElementById('voiceFeedback');
+const voiceCommandBtn = document.getElementById('voiceCommandBtn');
+const voiceFeedback = document.getElementById('voiceFeedback');
 
-  // Check if browser supports speech recognition
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let recognition;
+// Check if browser supports speech recognition
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition;
+let isListening = false;
 
-  if (SpeechRecognition) {
-    recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+  
+  recognition.onstart = function() {
+    isListening = true;
+    voiceCommandBtn.classList.add('active');
+    voiceCommandBtn.querySelector('.status-indicator').textContent = "Listening...";
+    voiceFeedback.style.display = 'block';
+    voiceFeedback.textContent = "Listening for commands...";
+    voiceFeedback.style.color = '#4CAF50';
+  };
+  
+  recognition.onresult = function(event) {
+    const transcript = event.results[0][0].transcript.toLowerCase();
+    voiceFeedback.textContent = `Heard: "${transcript}"`;
     
-    recognition.onstart = function() {
-      voiceCommandBtn.classList.add('listening');
+    // Process commands
+    if (transcript.includes('open instagram') || transcript.includes('open insta')) {
+      window.open('https://www.instagram.com/_rupambaral?utm_source=qr&igsh=MXVpaThodHFobDNzMw==', '_blank');
+      voiceFeedback.textContent = "Opening Instagram...";
+    } 
+    else if (transcript.includes('open facebook') || transcript.includes('open fb')) {
+      window.open('https://www.facebook.com/rupam.baral.71', '_blank');
+      voiceFeedback.textContent = "Opening Facebook...";
+    }
+    else if (transcript.includes('open snapchat') || transcript.includes('open snap')) {
+      window.open('https://www.snapchat.com/add/rupam_baral003?share_id=w4OeDPv6_Kg&locale=en-US', '_blank');
+      voiceFeedback.textContent = "Opening Snapchat...";
+    }
+    else if (transcript.includes('open linkedin') || transcript.includes('open linked in')) {
+      window.open('https://www.linkedin.com/in/rupam-baral-4415a2283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app', '_blank');
+      voiceFeedback.textContent = "Opening LinkedIn...";
+    }
+    else if (transcript.includes('open github') || transcript.includes('open git hub')) {
+      window.open('https://github.com/Rupam0034', '_blank');
+      voiceFeedback.textContent = "Opening GitHub...";
+    }
+    else if (transcript.includes('open replit') || transcript.includes('open replit')) {
+      window.open('https://replit.com/@rupambaral003', '_blank');
+      voiceFeedback.textContent = "Opening Replit...";
+    }
+    else if (transcript.includes('open spotify') || transcript.includes('open spotify')) {
+      window.open('https://open.spotify.com/playlist/7yfWzpe3QDdNfTsoDLuVce', '_blank');
+      voiceFeedback.textContent = "Opening Spotify...";
+    }
+    else if (transcript.includes('open youtube') || transcript.includes('open you tube')) {
+      window.open('https://www.youtube.com/@RupamBaralvlogs', '_blank');
+      voiceFeedback.textContent = "Opening YouTube...";
+    }
+    else if (transcript.includes('dark mode') || transcript.includes('dark theme')) {
+      document.body.classList.remove('light-mode');
+      document.getElementById('themeToggle').checked = false;
+      localStorage.setItem('theme', 'dark');
+      voiceFeedback.textContent = "Switching to dark mode...";
+    }
+    else if (transcript.includes('light mode') || transcript.includes('light theme')) {
+      document.body.classList.add('light-mode');
+      document.getElementById('themeToggle').checked = true;
+      localStorage.setItem('theme', 'light');
+      voiceFeedback.textContent = "Switching to light mode...";
+    }
+    else if (transcript.includes('open profile') || transcript.includes('show profile')) {
+      const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+      profileModal.show();
+      voiceFeedback.textContent = "Opening profile...";
+    }
+    else if (transcript.includes('open certificates') || transcript.includes('show certificates')) {
+      const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+      profileModal.show();
+      const certificatesTab = new bootstrap.Tab(document.querySelector('[data-bs-target="#certificates-content"]'));
+      certificatesTab.show();
+      voiceFeedback.textContent = "Opening certificates...";
+    }
+    else if (transcript.includes('open posts') || transcript.includes('show posts')) {
+      const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+      profileModal.show();
+      const postsTab = new bootstrap.Tab(document.querySelector('[data-bs-target="#posts-content"]'));
+      postsTab.show();
+      voiceFeedback.textContent = "Opening posts...";
+    }
+    else if (transcript.includes('download cv') || transcript.includes('download resume')) {
+      const downloadLink = document.querySelector('#profile-content a[download]');
+      if (downloadLink) {
+        downloadLink.click();
+        voiceFeedback.textContent = "Downloading CV...";
+      } else {
+        voiceFeedback.textContent = "CV download link not found";
+      }
+    }
+    else if (transcript.includes('open portfolio') || transcript.includes('show portfolio')) {
+      const portfolioLink = document.querySelector('a[href="portfolio.html"]');
+      if (portfolioLink) {
+        portfolioLink.click();
+        voiceFeedback.textContent = "Opening portfolio...";
+      } else {
+        voiceFeedback.textContent = "Portfolio link not found";
+      }
+    }
+    else if (transcript.includes('generate qr') || transcript.includes('show qr code')) {
+      const qrBtn = document.getElementById('qrCodeBtn');
+      if (qrBtn) {
+        qrBtn.click();
+        voiceFeedback.textContent = "Generating QR code...";
+      }
+    }
+    else if (transcript.includes('copy link') || transcript.includes('copy url')) {
+      const copyBtn = document.getElementById('copyLinkBtn');
+      if (copyBtn) {
+        copyBtn.click();
+        voiceFeedback.textContent = "Link copied to clipboard";
+      }
+    }
+    else if (transcript.includes('close') || transcript.includes('stop')) {
+      const openModal = document.querySelector('.modal.show');
+      if (openModal) {
+        const modalInstance = bootstrap.Modal.getInstance(openModal);
+        modalInstance.hide();
+      }
+      voiceFeedback.textContent = "Closing...";
+    }
+    else {
+      voiceFeedback.textContent = "Command not recognized. Try 'open profile', 'download CV', etc.";
+      voiceFeedback.style.color = '#FF5722';
+    }
+  };
+  
+  recognition.onerror = function(event) {
+    isListening = false;
+    voiceCommandBtn.classList.remove('active');
+    voiceCommandBtn.querySelector('.status-indicator').textContent = "";
+    voiceFeedback.textContent = "Error: " + event.error;
+    voiceFeedback.style.color = '#FF5722';
+    setTimeout(() => {
+      voiceFeedback.style.display = 'none';
+    }, 3000);
+  };
+  
+  recognition.onend = function() {
+    isListening = false;
+    voiceCommandBtn.classList.remove('active');
+    voiceCommandBtn.querySelector('.status-indicator').textContent = "";
+    setTimeout(() => {
+      voiceFeedback.style.display = 'none';
+    }, 3000);
+  };
+  
+  voiceCommandBtn.addEventListener('click', function() {
+    if (isListening) {
+      recognition.stop();
+      return;
+    }
+    
+    try {
+      recognition.start();
+    } catch (e) {
+      voiceFeedback.textContent = "Error: " + e.message;
       voiceFeedback.style.display = 'block';
-      voiceFeedback.textContent = "Listening for commands...";
-    };
-    
-    recognition.onresult = function(event) {
-      const transcript = event.results[0][0].transcript.toLowerCase();
-      voiceFeedback.textContent = `Heard: "${transcript}"`;
-      
-      // Process commands
-      if (transcript.includes('open instagram') || transcript.includes('open insta')) {
-        window.open('https://www.instagram.com/_rupambaral?utm_source=qr&igsh=MXVpaThodHFobDNzMw==', '_blank');
-        voiceFeedback.textContent = "Opening Instagram...";
-      } 
-      else if (transcript.includes('open facebook') || transcript.includes('open fb')) {
-        window.open('https://www.facebook.com/rupam.baral.71', '_blank');
-        voiceFeedback.textContent = "Opening Facebook...";
-      }
-      else if (transcript.includes('open snapchat') || transcript.includes('open snap')) {
-        window.open('https://www.snapchat.com/add/rupam_baral003?share_id=w4OeDPv6_Kg&locale=en-US', '_blank');
-        voiceFeedback.textContent = "Opening Snapchat...";
-      }
-      else if (transcript.includes('open linkedin') || transcript.includes('open linked in')) {
-        window.open('https://www.linkedin.com/in/rupam-baral-4415a2283?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app', '_blank');
-        voiceFeedback.textContent = "Opening LinkedIn...";
-      }
-      else if (transcript.includes('open github') || transcript.includes('open git hub')) {
-        window.open('https://github.com/Rupam0034', '_blank');
-        voiceFeedback.textContent = "Opening GitHub...";
-      }
-      else if (transcript.includes('open replit') || transcript.includes('open replit')) {
-        window.open('https://replit.com/@rupambaral003', '_blank');
-        voiceFeedback.textContent = "Opening Replit...";
-      }
-      else if (transcript.includes('open spotify') || transcript.includes('open spotify')) {
-        window.open('https://open.spotify.com/playlist/7yfWzpe3QDdNfTsoDLuVce', '_blank');
-        voiceFeedback.textContent = "Opening Spotify...";
-      }
-      else if (transcript.includes('open youtube') || transcript.includes('open you tube')) {
-        window.open('https://www.youtube.com/@RupamBaralvlogs', '_blank');
-        voiceFeedback.textContent = "Opening YouTube...";
-      }
-      else if (transcript.includes('dark mode') || transcript.includes('dark theme')) {
-        document.body.classList.remove('light-mode');
-        document.getElementById('themeToggle').checked = false;
-        localStorage.setItem('theme', 'dark');
-        voiceFeedback.textContent = "Switching to dark mode...";
-      }
-      else if (transcript.includes('light mode') || transcript.includes('light theme')) {
-        document.body.classList.add('light-mode');
-        document.getElementById('themeToggle').checked = true;
-        localStorage.setItem('theme', 'light');
-        voiceFeedback.textContent = "Switching to light mode...";
-      }
-      else if (transcript.includes('open profile') || transcript.includes('show profile')) {
-        const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
-        profileModal.show();
-        voiceFeedback.textContent = "Opening profile...";
-      }
-      else if (transcript.includes('open certificates') || transcript.includes('show certificates')) {
-        const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
-        profileModal.show();
-        const certificatesTab = new bootstrap.Tab(document.querySelector('[data-bs-target="#certificates-content"]'));
-        certificatesTab.show();
-        voiceFeedback.textContent = "Opening certificates...";
-      }
-      else if (transcript.includes('open posts') || transcript.includes('show posts')) {
-        const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
-        profileModal.show();
-        const postsTab = new bootstrap.Tab(document.querySelector('[data-bs-target="#posts-content"]'));
-        postsTab.show();
-        voiceFeedback.textContent = "Opening posts...";
-      }
-      else if (transcript.includes('download cv') || transcript.includes('download resume')) {
-        const downloadLink = document.querySelector('#profile-content a[download]');
-        if (downloadLink) {
-          downloadLink.click();
-          voiceFeedback.textContent = "Downloading CV...";
-        } else {
-          voiceFeedback.textContent = "CV download link not found";
-        }
-      }
-      else if (transcript.includes('open portfolio') || transcript.includes('show portfolio')) {
-        const portfolioLink = document.querySelector('a[href="portfolio.html"]');
-        if (portfolioLink) {
-          portfolioLink.click();
-          voiceFeedback.textContent = "Opening portfolio...";
-        } else {
-          voiceFeedback.textContent = "Portfolio link not found";
-        }
-      }
-      else if (transcript.includes('generate qr') || transcript.includes('show qr code')) {
-        const qrBtn = document.getElementById('qrCodeBtn');
-        if (qrBtn) {
-          qrBtn.click();
-          voiceFeedback.textContent = "Generating QR code...";
-        }
-      }
-      else if (transcript.includes('copy link') || transcript.includes('copy url')) {
-        const copyBtn = document.getElementById('copyLinkBtn');
-        if (copyBtn) {
-          copyBtn.click();
-          voiceFeedback.textContent = "Link copied to clipboard";
-        }
-      }
-      else if (transcript.includes('close') || transcript.includes('stop')) {
-        const openModal = document.querySelector('.modal.show');
-        if (openModal) {
-          const modalInstance = bootstrap.Modal.getInstance(openModal);
-          modalInstance.hide();
-        }
-        voiceFeedback.textContent = "Closing...";
-      }
-      else {
-        voiceFeedback.textContent = "Command not recognized. Try 'open profile', 'download CV', etc.";
-      }
-      
+      voiceFeedback.style.color = '#FF5722';
       setTimeout(() => {
         voiceFeedback.style.display = 'none';
       }, 3000);
-    };
-    
-    recognition.onerror = function(event) {
-      voiceCommandBtn.classList.remove('listening');
-      voiceFeedback.textContent = "Error occurred in recognition: " + event.error;
-      setTimeout(() => {
-        voiceFeedback.style.display = 'none';
-      }, 3000);
-    };
-    
-    recognition.onend = function() {
-      voiceCommandBtn.classList.remove('listening');
-    };
-    
-    voiceCommandBtn.addEventListener('click', function() {
-      try {
-        recognition.start();
-      } catch (e) {
-        voiceFeedback.textContent = "Error: " + e.message;
-        voiceFeedback.style.display = 'block';
-        setTimeout(() => {
-          voiceFeedback.style.display = 'none';
-        }, 3000);
-      }
-    });
-  } else {
-    voiceCommandBtn.style.display = 'none';
-    console.log("Speech recognition not supported in this browser.");
-  }
-
+    }
+  });
+} else {
+  voiceCommandBtn.style.display = 'none';
+  console.log("Speech recognition not supported in this browser.");
+}
   // Particle Effect
   function createParticles() {
     const overlay = document.querySelector('.overlay');
@@ -2271,20 +3409,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Navbar transition handling
-  const navCollapse = document.getElementById('navContent');
-  navCollapse.addEventListener('show.bs.collapse', () => {
-    document.body.classList.add('nav-opening');
-  });
-  navCollapse.addEventListener('shown.bs.collapse', () => {
-    document.body.classList.remove('nav-opening');
-  });
-  navCollapse.addEventListener('hide.bs.collapse', () => {
-    document.body.classList.add('nav-closing');
-  });
-  navCollapse.addEventListener('hidden.bs.collapse', () => {
-    document.body.classList.remove('nav-closing');
-  });
+
 
   // Media handling
   function resetAllMedia() {
@@ -2712,7 +3837,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Better Modal Closing Handling
+  //  Modal Closing Handling
   document.querySelectorAll('.modal').forEach(modal => {
     modal.addEventListener('hidden.bs.modal', function() {
       // Reset any playing media when modal closes
@@ -2727,7 +3852,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Enhanced Analytics Tracking
+  //  Analytics Tracking
   function initAnalytics() {
     // Track page view
     gtag('event', 'page_view', {
@@ -3008,7 +4133,7 @@ function showExitWarning() {
   }, 2000);
 }
 
-// Add minimal CSS for the warning
+//   warning
 const gestureStyle = document.createElement('style');
 gestureStyle.textContent = `
   .exit-warning {
@@ -3043,6 +4168,372 @@ gestureStyle.textContent = `
 `;
 document.head.appendChild(gestureStyle);
 
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // NGL/Confession Mode Switcher
+  const modeSwitcherBtns = document.querySelectorAll('.mode-switcher-btn');
+  const nglContent = document.getElementById('nglContent');
+  const confessContent = document.getElementById('confessContent');
+  const body = document.body;
+  
+  if (modeSwitcherBtns.length) {
+    modeSwitcherBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Set active state
+        modeSwitcherBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Toggle content based on mode
+        const mode = this.dataset.mode;
+        if (mode === 'confess') {
+          nglContent.style.display = 'none';
+          confessContent.style.display = 'block';
+          body.classList.add('confession-mode');
+        } else {
+          nglContent.style.display = 'block';
+          confessContent.style.display = 'none';
+          body.classList.remove('confession-mode');
+        }
+      });
+    });
+  }
+  
+  // NGL Copy Link Functionality
+  document.getElementById('nglCopyLinkBtn')?.addEventListener('click', function() {
+    const activeMode = document.querySelector('.mode-switcher-btn.active').dataset.mode;
+    const link = activeMode === 'confess' ? 
+      'https://confess.ngl.link/_rupam' : 
+      'https://ngl.link/_rupam';
+    
+    navigator.clipboard.writeText(link).then(() => {
+      // Change button style temporarily to indicate success
+      this.innerHTML = '<i class="fas fa-check me-2"></i> Copied!';
+      
+      // Reset after 2 seconds
+      setTimeout(() => {
+        this.innerHTML = '<i class="fas fa-copy me-2"></i> Copy Link';
+      }, 2000);
+      
+      // Track copy action
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'link_copied', {
+          event_category: 'Engagement',
+          event_label: 'NGL Link'
+        });
+      }
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+      
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement('textarea');
+      textArea.value = link;
+      document.body.appendChild(textArea);
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        this.innerHTML = '<i class="fas fa-check me-2"></i> Copied!';
+        setTimeout(() => {
+          this.innerHTML = '<i class="fas fa-copy me-2"></i> Copy Link';
+        }, 2000);
+      } catch (err) {
+        alert('Failed to copy link. Please try again or copy manually.');
+      }
+      document.body.removeChild(textArea);
+    });
+  });
+  
+  // Handle modal show/hide events to reset mode
+  const nglModal = document.getElementById('nglModal');
+  if (nglModal) {
+    nglModal.addEventListener('show.bs.modal', function() {
+      // Reset to NGL mode when modal opens
+      document.querySelector('.mode-switcher-btn[data-mode="ngl"]').click();
+    });
+    
+    nglModal.addEventListener('hidden.bs.modal', function() {
+      // Remove confession mode class when modal closes
+      body.classList.remove('confession-mode');
+    });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const drawerToggle = document.getElementById('drawerToggle');
+  const drawerClose = document.getElementById('drawerClose');
+  const sideDrawer = document.getElementById('sideDrawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+
+  function toggleDrawer() {
+    sideDrawer.classList.toggle('open');
+    drawerOverlay.classList.toggle('active');
+    
+    // Prevent scrolling when drawer is open
+    if (sideDrawer.classList.contains('open')) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function initDrawer() {
+    if (!drawerToggle || !sideDrawer) return;
+
+    // Toggle button click
+    drawerToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleDrawer();
+    });
+
+    // Close button click
+    if (drawerClose) {
+      drawerClose.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleDrawer();
+      });
+    }
+
+    // Overlay click
+    if (drawerOverlay) {
+      drawerOverlay.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleDrawer();
+      });
+    }
+
+    // Close drawer when clicking outside
+    document.addEventListener('click', function(e) {
+      if (sideDrawer.classList.contains('open') && 
+          !sideDrawer.contains(e.target) && 
+          e.target !== drawerToggle) {
+        toggleDrawer();
+      }
+    });
+
+    // Close drawer on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sideDrawer.classList.contains('open')) {
+        toggleDrawer();
+      }
+    });
+
+    // Close drawer when a navigation item is clicked
+    const navItems = sideDrawer.querySelectorAll('.drawer-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', function() {
+        toggleDrawer();
+      });
+    });
+  }
+
+  initDrawer();
+
+  
+ 
+});
+
+  const voiceCommandBtn = document.getElementById('voiceCommandBtn');
+  const statusIndicator = voiceCommandBtn.querySelector('.status-indicator');
+  
+  voiceCommandBtn.addEventListener('click', function() {
+    this.classList.toggle('active');
+    
+    if (this.classList.contains('active')) {
+      statusIndicator.textContent = 'Listening...';
+      //  voice command activation logic here
+    } else {
+      statusIndicator.textContent = '';
+      //  voice command deactivation logic here
+    }
+  });
+
+
+// Function to open profile modal with specific tab
+function openProfileTab(tabName) {
+  const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+  profileModal.show();
+  
+  // Close drawer if open
+  const sideDrawer = document.getElementById('sideDrawer');
+  if (sideDrawer.classList.contains('open')) {
+    sideDrawer.classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  // Switch to the requested tab after a small delay to allow modal to open
+  setTimeout(() => {
+    const tabButtons = {
+      'profile': document.querySelector('[data-bs-target="#profile-content"]'),
+      'posts': document.querySelector('[data-bs-target="#posts-content"]'),
+      'certificates': document.querySelector('[data-bs-target="#certificates-content"]')
+    };
+    
+    if (tabButtons[tabName]) {
+      const tab = new bootstrap.Tab(tabButtons[tabName]);
+      tab.show();
+      
+      // If it's the posts tab, initialize the swiper
+      if (tabName === 'posts') {
+        setTimeout(() => {
+          if (window.postSwiper) {
+            postSwiper.update();
+          }
+        }, 300);
+      }
+      
+      // If it's the certificates tab, initialize the swiper
+      if (tabName === 'certificates') {
+        setTimeout(() => {
+          if (window.certificateSwiper) {
+            certificateSwiper.update();
+          }
+        }, 300);
+      }
+    }
+  }, 100);
+}
+
+
+
+
+
+
+
+
+
+// Function to open portfolio
+function openPortfolio() {
+  // Close drawer if open
+  const sideDrawer = document.getElementById('sideDrawer');
+  if (sideDrawer.classList.contains('open')) {
+    sideDrawer.classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  // Open portfolio
+  const portfolioLink = document.querySelector('a[href="portfolio.html"]');
+  if (portfolioLink) {
+    portfolioLink.click();
+  }
+}
+
+
+function openProfileTab(tabName) {
+  // Convert to lowercase for case-insensitive matching
+  tabName = tabName.toLowerCase();
+  
+  const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+  profileModal.show();
+  
+  // Close drawer if open
+  const sideDrawer = document.getElementById('sideDrawer');
+  if (sideDrawer.classList.contains('open')) {
+    sideDrawer.classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  // Map of possible tab names to their selectors
+  const tabMap = {
+    'profile': '[data-bs-target="#profile-content"]',
+    'posts': '[data-bs-target="#posts-content"]',
+    'gallery': '[data-bs-target="#posts-content"]', // Alias for gallery
+    'certificates': '[data-bs-target="#certificates-content"]'
+  };
+  
+  // Switch to the requested tab after a small delay
+  setTimeout(() => {
+    const tabSelector = tabMap[tabName];
+    if (tabSelector) {
+      const tabButton = document.querySelector(tabSelector);
+      if (tabButton) {
+        const tab = new bootstrap.Tab(tabButton);
+        tab.show();
+        
+        // Initialize swipers if needed
+        if (tabName === 'posts' || tabName === 'gallery') {
+          setTimeout(() => {
+            if (window.postSwiper) {
+              postSwiper.update();
+            }
+          }, 300);
+        }
+        
+        if (tabName === 'certificates') {
+          setTimeout(() => {
+            if (window.certificateSwiper) {
+              certificateSwiper.update();
+            }
+          }, 300);
+        }
+      }
+    }
+  }, 100);
+}
+
+
+
+
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+
+// QR Code Button in Drawer
+document.getElementById('drawerQrCodeBtn')?.addEventListener('click', function() {
+  // Close drawer if open
+  const sideDrawer = document.getElementById('sideDrawer');
+  if (sideDrawer.classList.contains('open')) {
+    sideDrawer.classList.remove('open');
+    document.getElementById('drawerOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  // Generate QR code
+  const qrDataUrl = generateQRCode('qrCodeContainer');
+  
+  // Set up download link
+  const downloadBtn = document.getElementById('qrDownloadBtn');
+  downloadBtn.href = qrDataUrl;
+  
+  // Show modal
+  const qrModal = new bootstrap.Modal(document.getElementById('qrCodeModal'));
+  qrModal.show();
+  
+  // Track QR code generation
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'qr_generated', {
+      event_category: 'Engagement',
+      event_label: 'QR Code'
+    });
+  }
+});
+function generateQRCode(containerId) {
+  const qr = qrcode(0, 'L');
+  qr.addData(window.location.href);
+  qr.make();
+  
+  const qrContainer = document.getElementById(containerId);
+  if (qrContainer) {
+    qrContainer.innerHTML = qr.createImgTag(4);
+    
+    // Set up download link
+    const qrImg = qrContainer.querySelector('img');
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = qrImg.width;
+    canvas.height = qrImg.height;
+    ctx.drawImage(qrImg, 0, 0);
+    
+    return canvas.toDataURL('image/png');
+  }
+  return '';
+}
 </script>
 </body>
 </html>
