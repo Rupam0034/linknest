@@ -2238,6 +2238,230 @@ body.light-mode .drawer-content::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
 }
 
+/* WhatsApp Modal Styles */
+.whatsapp-modal-content {
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: rgba(15, 32, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+body.light-mode .whatsapp-modal-content {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.whatsapp-modal-close-container {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+}
+
+.whatsapp-close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.whatsapp-close-btn::before {
+  content: "✕"; 
+  font-size: 1rem;
+  color: #020202;
+  line-height: 1;
+}
+
+body.light-mode .whatsapp-close-btn::before {
+  color: #fffdfd;
+}
+
+
+.whatsapp-close-btn:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+body.light-mode .whatsapp-close-btn:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.whatsapp-modal-body {
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+}
+
+.whatsapp-icon-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+}
+
+.whatsapp-main-icon {
+  font-size: 3rem;
+  color: #25D366;
+  position: relative;
+  z-index: 2;
+}
+
+.whatsapp-pulse-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #25D366;
+  border-radius: 50%;
+  opacity: 0;
+  animation: whatsappPulse 2s infinite;
+}
+
+@keyframes whatsappPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+.whatsapp-heading {
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+body.light-mode .whatsapp-heading {
+  color: #333;
+}
+
+.whatsapp-description {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+body.light-mode .whatsapp-description {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.whatsapp-features {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.whatsapp-feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+}
+
+body.light-mode .whatsapp-feature-item {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.feature-icon {
+  color: #25D366;
+  font-size: 1.2rem;
+}
+
+body.light-mode .feature-icon {
+  color: #128C7E;
+}
+
+.whatsapp-cta-btn {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-note {
+  margin-top: 1.2rem;
+  padding: 10px 15px;
+  background: rgba(37, 211, 102, 0.1);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+body.light-mode .whatsapp-note {
+  background: rgba(18, 140, 126, 0.1);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* Responsive adjustments */
+@media (max-width: 575.98px) {
+  .whatsapp-modal-body {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+  
+  .whatsapp-features {
+    gap: 1rem;
+  }
+  
+  .whatsapp-feature-item {
+    font-size: 0.8rem;
+  }
+  
+  .whatsapp-modal-close-container {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .whatsapp-close-btn {
+    padding: 6px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+.whatsapp-description {
+  font-size: 0.85rem;   
+  line-height: 1.4;     
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 1rem;
+}
+
+body.light-mode .whatsapp-description {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+
 </style>
 </head>
 <body>
@@ -2390,7 +2614,7 @@ body.light-mode .drawer-content::-webkit-scrollbar-thumb {
    </div>
   
   <div class="drawer-footer">
-    LinkNest v3.0
+    LinkNest v3.5
   </div>
 </div>
 
@@ -2472,7 +2696,12 @@ body.light-mode .drawer-content::-webkit-scrollbar-thumb {
 </div>
 
 <!-- Compact Profile Modal  -->
-<div class="modal fade profile-modal" id="profileModal" tabindex="-1">
+<div class="modal fade profile-modal" 
+     id="profileModal" 
+     tabindex="-1"
+      aria-hidden="true"
+     data-bs-backdrop="true" 
+     data-bs-keyboard="true">
   <div class="modal-dialog modal-dialog-centered">
 
     <div class="modal-content p-3 mx-auto">
@@ -2480,7 +2709,7 @@ body.light-mode .drawer-content::-webkit-scrollbar-thumb {
       <button type="button" 
               class="btn-close position-absolute bg-white p-2 rounded-circle shadow-sm" 
               style="top: 10px; right: 10px; z-index: 10;"
-              data-bs-dismiss="modal"></button>
+              data-bs-dismiss="modal" aria-label="Close"></button>
 
       <div class="row">
         <!-- Left Column -->
@@ -2779,16 +3008,21 @@ body.light-mode .drawer-content::-webkit-scrollbar-thumb {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+      </div> 
+    </div> 
+  </div> 
+</div> 
 
-<div class="modal fade" id="enlargedProfileModal" tabindex="-1" aria-hidden="true">
+<!-- Enlarged Profile Modal -->
+<div class="modal fade" 
+     id="enlargedProfileModal" 
+     tabindex="-1" 
+     aria-hidden="true"
+     data-bs-backdrop="true" 
+     data-bs-keyboard="true">
   <div class="modal-dialog modal-dialog-centered d-flex align-items-center justify-content-center">
     <div class="modal-content bg-transparent border-0">
       <div class="modal-header border-0" style="position: absolute; top: 0; right: 0; z-index: 1;">
-        
       </div>
       <div class="modal-body p-0 d-flex flex-column align-items-center">
         <img src="images/dp Image 2025-07-11 at 5.27.49 PM.jpeg" 
@@ -2804,10 +3038,10 @@ body.light-mode .drawer-content::-webkit-scrollbar-thumb {
             <i class="fas fa-link me-1"></i> Copy Link
           </button>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+      </div> 
+    </div> 
+  </div> 
+</div> 
 
 
 
@@ -2854,7 +3088,6 @@ body.light-mode .drawer-content::-webkit-scrollbar-thumb {
         </iframe>
       </div>
       
-      <!-- Minimal title overlay -->
       <div class="position-absolute bottom-0 start-0 p-3 text-white" style="z-index: 1; background: linear-gradient(transparent, rgba(0,0,0,0.7)); width: 100%;">
         <h6 class="mb-0">My Playlist</h6>
         <small class="opacity-75">Vibe with my favorite tracks</small>
@@ -3040,33 +3273,48 @@ body.light-mode .drawer-content::-webkit-scrollbar-thumb {
 <!-- WhatsApp Modal -->
 <div class="modal fade" id="whatsappModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center shadow-lg rounded-4 bg-dark text-white">
+    <div class="modal-content whatsapp-modal-content">
+      <div class="whatsapp-modal-close-container">
+        <button type="button" class="btn-close whatsapp-close-btn"      data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
       
-
-      <div class="modal-body">
-        <i class="fab fa-whatsapp text-success mb-3" style="font-size: 3rem;"></i>
-        <h5 class="mb-3 fw-semibold">Request My WhatsApp</h5>
+      <div class="modal-body whatsapp-modal-body">
+        <div class="whatsapp-icon-container">
+          <i class="fab fa-whatsapp whatsapp-main-icon"></i>
+          <div class="whatsapp-pulse-ring"></div>
+        </div>
         
-        <a href="https://forms.gle/ZU1qEH1B5B886m7V7" target="_blank" class="btn btn-success w-100">
-          <i class="fas fa-link me-2"></i> Fill Request Form
+        <h4 class="whatsapp-heading">Connect on WhatsApp</h4>
+        <p class="whatsapp-description">Fill out the request form to get my WhatsApp number. I'll review your request and connect with you soon!</p>
+        
+        <div class="whatsapp-features">
+          <div class="whatsapp-feature-item">
+            <i class="fas fa-shield-alt feature-icon"></i>
+            <span>Privacy protected</span>
+          </div>
+          <div class="whatsapp-feature-item">
+            <i class="fas fa-clock feature-icon"></i>
+            <span>Quick response</span>
+          </div>
+          <div class="whatsapp-feature-item">
+            <i class="fas fa-user-check feature-icon"></i>
+            <span>Verified connections</span>
+          </div>
+        </div>
+        
+        <a href="https://forms.gle/ZU1qEH1B5B886m7V7" target="_blank" 
+           class="btn whatsapp-cta-btn w-100">
+          <i class="fas fa-external-link-alt me-2"></i> Fill Request Form
         </a>
-
-        <div class="mt-3 px-3 py-2 bg-secondary bg-opacity-25 rounded-3 d-flex align-items-center justify-content-center">
-          <i class="fas fa-user-check me-2 text-info"></i>
-          <span class="small text-light">Include your handle for quick DM verification.</span>
+        
+        <div class="whatsapp-note">
+          <i class="fas fa-info-circle me-1"></i>
+          <small>Include your Instagram handle for quicker verification</small>
         </div>
       </div>
-
-      <div class="modal-footer border-0 justify-content-center">
-       <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
-
-      </div>
-
     </div>
   </div>
 </div>
-
-
 
 
 
